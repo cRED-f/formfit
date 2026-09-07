@@ -34,34 +34,90 @@ const useCases = [
 const faq: Faq[] = [
   {
     q: 'What is FormFit?',
-    a: 'FormFit is a collection of free browser-based tools that resize, compress, convert, and prepare images and signatures so they pass online form requirements — things like "under 50 KB", "300 × 300 px", or "JPG only".',
+    a: 'FormFit is a free online tool that lets you compress, resize, and convert images directly in your browser. It helps you prepare photos and signatures for online forms without uploading your files to any server.',
   },
   {
-    q: 'Do I need to create an account?',
-    a: 'No. There is no login and no signup. Open a tool, upload your image, and download the result — that\'s it.',
+    q: 'How can I compress an image online?',
+    a: 'Upload your image to the FormFit compressor tool, set your desired file size or quality, and download the compressed image instantly. The entire process happens in your browser — no server upload required.',
   },
   {
-    q: 'Are my images uploaded to a server?',
-    a: 'No. Everything happens inside your browser using your device\'s own processing power. Your files never leave your computer or phone.',
+    q: 'How can I reduce image size in KB?',
+    a: 'Use the FormFit image compressor to reduce your image file size in KB. Enter your target size — such as 50 KB or 100 KB — and FormFit will compress the image to fit within that limit while keeping the best possible quality.',
   },
   {
-    q: 'Is FormFit free?',
-    a: 'Yes. Every tool on FormFit is free to use, with no limits or hidden charges.',
+    q: 'How can I compress an image to 50KB?',
+    a: 'Open the FormFit compressor, upload your image, enter 50 in the target size field, and click Compress. FormFit will reduce your image to 50 KB or smaller while maintaining the highest possible quality.',
   },
   {
-    q: 'Which image formats are supported?',
-    a: 'JPG, PNG, and WebP are supported across all FormFit tools, with more formats planned.',
+    q: 'How can I resize an image to exact pixels?',
+    a: 'Use the FormFit resizer tool to enter your exact width and height in pixels. You can set any dimension like 300x300, 500x500, or custom sizes to match your form requirements.',
   },
   {
-    q: 'Which tools are available?',
-    a: 'Today FormFit offers the Image Resizer, Compress, Signature Resizer, and Image Converter. More tools are on the way.',
+    q: 'How do I resize an image to 300x300 pixels?',
+    a: 'Upload your image to the FormFit resizer, enter 300 in both the width and height fields, and click Resize. Your image will be resized to exactly 300x300 pixels.',
+  },
+  {
+    q: 'Can I resize and compress an image at the same time?',
+    a: 'Yes, you can use FormFit to resize your image to the required dimensions and then compress it to the target file size. Both tools work together to prepare your image for any online form.',
+  },
+  {
+    q: 'How can I resize a signature online?',
+    a: 'Upload your signature image to the FormFit signature resizer, set the required width and height, and download the resized signature. FormFit automatically crops empty space and centres the signature.',
+  },
+  {
+    q: 'How can I compress a signature to 20KB?',
+    a: 'Use the FormFit signature compressor to upload your signature, set the maximum file size to 20 KB, and download the compressed result. FormFit ensures your signature fits within the size limit.',
+  },
+  {
+    q: 'Can I resize JPG, PNG, and WebP images?',
+    a: 'Yes, FormFit supports JPG, PNG, and WebP images. You can resize and compress all three formats directly in your browser.',
+  },
+  {
+    q: 'How can I convert PNG to JPG?',
+    a: 'Upload your PNG image to the FormFit image converter, select JPG as the output format, and download the converted file. The conversion happens instantly in your browser.',
+  },
+  {
+    q: 'Does resizing an image reduce file size?',
+    a: 'Yes, resizing an image to smaller pixel dimensions typically reduces its file size. However, if you need to meet an exact KB limit, it is best to use a dedicated image compressor after resizing.',
+  },
+  {
+    q: 'How can I reduce image size without losing too much quality?',
+    a: 'Use the FormFit image compressor to reduce file size while maintaining the best possible quality. It uses smart compression to shrink your image without making it look blurry or pixelated.',
+  },
+  {
+    q: 'Can I compress images without uploading them to a server?',
+    a: 'Yes, FormFit runs entirely in your browser. Your images are never uploaded to any server, making it a completely private way to compress and resize your photos.',
+  },
+  {
+    q: 'Is FormFit free to use?',
+    a: 'Yes, FormFit is completely free. You can compress, resize, and convert as many images as you need without any cost.',
+  },
+  {
+    q: 'Do I need to create an account to use FormFit?',
+    a: 'No, FormFit does not require any account or registration. Simply open the tool, upload your image, and download the result.',
+  },
+  {
+    q: 'How can I prepare a photo for an online application form?',
+    a: 'Upload your photo to FormFit, resize it to the required dimensions, compress it to the allowed file size, and download the ready-to-upload image — all in a few clicks.',
+  },
+  {
+    q: 'How can I reduce a photo below an upload size limit?',
+    a: 'Use the FormFit compressor to set your target file size below the upload limit. Enter the maximum size allowed by your form and FormFit will compress the photo to fit.',
+  },
+  {
+    q: 'What is the difference between image dimensions and image file size?',
+    a: 'Image dimensions refer to the width and height of the image in pixels, such as 300x300. Image file size refers to the storage space the image occupies, measured in KB or MB. FormFit lets you control both — resize dimensions and compress file size separately.',
+  },
+  {
+    q: 'What is the best image format for a smaller file size?',
+    a: 'JPG and WebP are generally the best formats for smaller file sizes. PNG is ideal when you need transparency. FormFit supports all three and lets you convert between them easily.',
   },
 ];
 
 const guides = [
-  { href: '/guides/reduce-image-file-size/', title: 'How to reduce image file size', description: 'Three ways to shrink an image for any size limit.' },
-  { href: '/guides/image-size-vs-dimensions/', title: 'Image size vs. dimensions', description: 'Why "50 KB" and "300 × 300 px" mean different things.' },
-  { href: '/guides/prepare-photo-for-online-form/', title: 'Prepare a photo for an online form', description: 'A quick walkthrough before you hit submit.' },
+  { href: '/compress-to-kb/', title: 'How to compress an image to 50 KB', description: 'Target 20, 50, 100 KB, or any exact file-size limit.' },
+  { href: '/resize-to-pixels/', title: 'Resize a photo to exact pixels', description: '100×100, 200×200, 300×300, 500×500 — exactly.' },
+  { href: '/form-photos/', title: 'Prepare a photo for an online form', description: 'A step-by-step walkthrough before you hit submit.' },
 ];
 
 const websiteSchema = {
@@ -70,7 +126,7 @@ const websiteSchema = {
   name: 'FormFit',
   url: 'https://formfit.com',
   description:
-    'Free browser-based tools to resize, compress, convert, and prepare images and signatures for online forms — all inside your browser.',
+    'Free online image compressor, resizer, and converter. Compress to exact KB, resize to any pixel dimension, and prepare images for online forms — all private and in your browser.',
 };
 
 const faqSchema = {
@@ -85,8 +141,8 @@ const faqSchema = {
 ---
 
 <Layout
-  title="FormFit — Make Any Image Upload-Ready"
-  description="Free online tools to resize, compress, convert, and prepare images and signatures for forms. 100% in your browser — nothing is ever uploaded."
+  title="Free Image Compressor & Resizer Online | FormFit"
+  description="Compress image to exact KB, resize photo to any dimension, prepare signature for online forms, and convert JPG/PNG/WebP — free, private, and entirely in your browser."
   path="/"
 >
   <Fragment slot="head">
@@ -102,7 +158,7 @@ const faqSchema = {
           Make any image upload-ready
         </h1>
         <p class="mx-auto mt-6 max-w-xl text-lead text-ink-muted-80">
-          Resize, compress, and convert images for any online form — right in your browser.
+          Free image compressor, resizer, and converter — compress to exact KB, resize to any dimension, and prepare photos and signatures for online forms.
         </p>
 
         <!-- Default hero upload (demo gif) -->
@@ -302,7 +358,7 @@ const faqSchema = {
       <div class="py-20">
         <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">Why FormFit</h2>
         <p class="mx-auto mt-4 max-w-xl text-center text-body text-ink-muted-80">
-          The simplest way to get your images accepted by any online form — no software to install, no account to create.
+          The simplest way to compress, resize, and convert images for any online form — no software to install, no account to create, and nothing uploaded.
         </p>
         <div class="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           <div class="text-center">
@@ -398,7 +454,7 @@ const faqSchema = {
       <div class="py-20 text-center">
         <h2 class="text-display-md font-semibold tracking-[-0.374px]">Built for real uploads</h2>
         <p class="mx-auto mt-4 max-w-xl text-body text-ink-muted-80">
-          When a form rejects your image — too large, wrong size, wrong format — FormFit fixes it in seconds.
+          When a form rejects your image — too large, wrong dimensions, wrong format — compress, resize, and convert it with FormFit in seconds.
         </p>
         <ul class="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-2.5">
           {useCases.map((item) => (

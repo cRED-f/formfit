@@ -1,0 +1,155 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import Container from '../../components/layout/Container.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import PreviewPanel from '../../components/tool/PreviewPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'How do I compress a signature to 20 KB?',
+    a: 'Upload your signature image, set the width and height (the tool suggests 300 × 80 px), enter 20 as the maximum size, and click Prepare Signature. FormFit crops the empty space and compresses the ink to fit clearly under 20 KB.',
+  },
+  {
+    q: 'Why do forms ask for a signature under 20 KB?',
+    a: 'Signatures are simple line drawings on white, so they compress to very small files easily. A 20 KB limit is common for storing many signatures efficiently. Because there is little colour detail, a signature compresses cleanly without visible damage.',
+  },
+  {
+    q: 'Can I compress a signature to 10 KB or 30 KB instead?',
+    a: 'Yes. The maximum-size field accepts any number. A lower limit like 10 KB still works for a simple signature, while 30 or 50 KB gives a little more headroom if the ink is textured or photographed.',
+  },
+  {
+    q: 'My signature is a photo of paper — will it still fit 20 KB?',
+    a: 'Yes, with two tricks. FormFit crops the paper background so only the ink remains, then compresses. A clean, high-contrast signature photo goes under 20 KB easily; a shadowy or low-contrast photo compresses less well, so we centre and tidy it first.',
+  },
+  {
+    q: 'Should a signature be JPG or PNG?',
+    a: 'Forms usually state the format. Use JPG for a white-background signature (smaller file), or PNG when transparency matters, such as placing the signature over a document. FormFit supports JPG output for compression and lets you keep or clear the background.',
+  },
+  {
+    q: 'Is compressing a signature online private?',
+    a: 'Yes. FormFit is a browser-based signature compressor — your signature is processed on your own device and never uploaded. A signature is sensitive, and with FormFit it never leaves your computer or phone.',
+  },
+];
+
+const howTo = [
+  'Upload a photo or file of your signature.',
+  'Set width, height, and the maximum file size — 20 KB by default.',
+  'Choose the background: keep white, or make it transparent.',
+  'FormFit crops, centres, resizes, and compresses — download the ready signature.',
+];
+
+const examples = [
+  'Signature photo → 300 × 80 px, under 20 KB',
+  'Paper and shadows around the ink removed automatically',
+  'Transparent-background signature for overlaying on documents',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Signature Resizer', href: '/signature-resizer/', description: 'Crop and resize a signature for forms.', icon: 'signature' },
+  { title: 'Compress to KB', href: '/compress-to-kb/', description: 'Target 20, 50, or 100 KB exactly.', icon: 'compress' },
+  { title: 'Form Photos', href: '/form-photos/', description: 'Preparing photos for online forms.', icon: 'upload' },
+];
+---
+
+<ToolShell
+  title="Signature Compressor — Compress Signature to 20 KB | FormFit"
+  description="Compress signature for online forms — reduce signature file size to 20 KB, 30 KB, or exact KB. Free online signature compressor with background removal. Runs in your browser."
+  path="/signature-compressor/"
+  heading="Signature Compressor"
+  intro="Application portals rarely want a large signature file — usually they ask for something tiny like 20 KB. Upload your signature and the signature compressor crops the empty paper, centres the ink, and compresses it to fit the exact limit your form sets."
+  toolName="Online Signature Compressor"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <CropPanel />
+
+        <div class="grid gap-5 sm:grid-cols-3">
+          <Input id="sig-width" label="Width" type="number" inputmode="numeric" min="1" defaultValue="300" unit="px" />
+          <Input id="sig-height" label="Height" type="number" inputmode="numeric" min="1" defaultValue="80" unit="px" />
+          <Input id="sig-kb" label="Maximum size" type="number" inputmode="numeric" min="1" defaultValue="20" unit="KB" />
+        </div>
+
+        <div class="mt-5 w-full sm:w-72">
+          <Select
+            id="sig-background"
+            label="Background"
+            options={[
+              { value: 'original', label: 'Original' },
+              { value: 'white', label: 'White' },
+              { value: 'transparent', label: 'Transparent' },
+            ]}
+          />
+        </div>
+
+        <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+          We automatically crop empty space around your signature, keep its proportions, and centre
+          it in a 300 × 80 frame. Almost every signature fits under 20 KB this way.
+        </p>
+
+        <PreviewPanel />
+
+        <div class="mt-6">
+          <Button size="lg" icon="signature" data-run="signature">
+            Compress Signature
+          </Button>
+        </div>
+      </div>
+      <ResultPanel slot="result" />
+    </UploadPanel>
+  </div>
+
+  <div slot="content">
+    <section class="bg-canvas">
+      <Container width="standard">
+        <div class="py-16">
+          <p class="text-caption-strong text-primary">Why signatures compress so well</p>
+          <h2 class="mt-1 text-display-md font-semibold tracking-[-0.374px]">
+            A signature is the easiest image to shrink
+          </h2>
+          <p class="mt-4 max-w-3xl text-body text-ink-muted-80">
+            A signature is mostly empty space: dark ink on a white or clear background. Compression
+            algorithms love that. The trick is doing it alone — a signature on a big sheet of paper
+            carries thousands of wasted grey pixels that a 20 KB limit cannot afford. Remove the
+            paper first, and the ink alone fits comfortably under any typical form limit.
+          </p>
+          <div class="mt-8 grid gap-6 sm:grid-cols-3">
+            <div class="rounded-xl border border-hairline bg-pearl p-6">
+              <h3 class="text-body font-semibold">1. Crop the paper</h3>
+              <p class="mt-2 text-caption text-ink-muted-48">
+                The photo shrinks to just the ink — the biggest saving a signature can get.
+              </p>
+            </div>
+            <div class="rounded-xl border border-hairline bg-pearl p-6">
+              <h3 class="text-body font-semibold">2. Keep the proportions</h3>
+              <p class="mt-2 text-caption text-ink-muted-48">
+                A signature stays recognisable even at small sizes because its shape is untouched.
+              </p>
+            </div>
+            <div class="rounded-xl border border-hairline bg-pearl p-6">
+              <h3 class="text-body font-semibold">3. Compress the ink</h3>
+              <p class="mt-2 text-caption text-ink-muted-48">
+                Flat ink areas compress almost for free, so the result lands easily under 20 KB.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  </div>
+</ToolShell>
+
+<script>
+  import { mountSignature } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountSignature(root);
+</script>

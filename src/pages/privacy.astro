@@ -7,16 +7,27 @@ const crumbs = [{ name: 'Home', href: '/' }, { name: 'Privacy Policy' }];
 ---
 
 <Layout
-  title="Privacy Policy | FormFit"
-  description="FormFit processes images entirely in your browser. Your images are never uploaded to our servers. Read the short version of our privacy policy."
+  title="Privacy Policy — Your Images Stay on Your Device | FormFit"
+  description="FormFit is a private browser-based image compressor, resizer, and converter. Your images are never uploaded — they are processed entirely on your device."
   path="/privacy/"
 >
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://formfit.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Privacy Policy", "item": "https://formfit.com/privacy/" }
+      ]
+    }
+  </script>
   <Container width="narrow">
     <div class="py-16">
       <Breadcrumbs items={crumbs} />
       <h1 class="mt-7 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">Privacy Policy</h1>
       <p class="mt-5 text-lead text-ink-muted-80">
-        The short version: your images never leave your device, and FormFit has no way to see them.
+        The short version: FormFit is a browser-based image compressor, resizer, and converter.
+        Your images never leave your device, and FormFit has no way to see them.
       </p>
 
       <div class="mt-12 space-y-12">

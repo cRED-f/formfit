@@ -9,20 +9,28 @@ import Select from '../../components/ui/Select.astro';
 
 const faq = [
   {
-    q: 'What does "compress to 50 KB" mean?',
-    a: 'You tell FormFit the maximum file size your form allows — say 50 KB — and FormFit produces the highest-quality version of your image that still fits under that limit. It works back from 100% quality, so you always get the best result that meets the requirement.',
+    q: 'How do I compress an image to a specific KB?',
+    a: 'Upload your image, enter the target file size in KB — for example, 50, 100, or 200 — and click Compress Image. FormFit uses intelligent compression to find the highest quality that still fits under your limit. It works for JPG, PNG, and WebP.',
   },
   {
-    q: 'Will compression ruin my image?',
-    a: 'No. FormFit compresses gradually and stops as soon as the file fits, preserving as much quality as possible. If an image is so big it cannot reach the target without shrinking, FormFit tells you clearly instead of silently destroying it.',
+    q: 'What does "compress to 50 KB" mean?',
+    a: 'You tell FormFit the maximum file size your form allows — say 50 KB — and the image compressor produces the highest-quality version that fits under that limit. It works back from 100% quality, so you always get the best result that meets the requirement.',
+  },
+  {
+    q: 'Will compression ruin my image quality?',
+    a: 'No. FormFit compresses gradually and stops as soon as the file fits, preserving as much quality as possible. If an image is so large it cannot reach the target without shrinking dimensions, FormFit tells you clearly instead of silently destroying the quality.',
+  },
+  {
+    q: 'Can I compress a photo below 100 KB for an application form?',
+    a: 'Yes. Enter 100 in the target field and the photo compressor will find the best quality under 100 KB. This works for any limit — 20 KB for signatures, 50 KB for exam photos, 200 KB for document scans, and more.',
   },
   {
     q: 'Is there a limit to how large a file I can upload?',
-    a: 'FormFit processes files up to about 25 MB in your browser. Larger images still work but may take a little longer on slower devices.',
+    a: 'FormFit processes images up to about 25 MB in your browser. Larger photos still work but may take a little longer on slower devices.',
   },
   {
     q: 'Do you upload my images?',
-    a: 'Never. Compression happens entirely on your device. Your image is read, processed, and downloaded without ever being sent to a server.',
+    a: 'Never. FormFit is a browser-based image compressor — compression happens entirely on your device. Your photo is read, compressed, and downloaded without ever being sent to a server.',
   },
 ];
 
@@ -47,12 +55,12 @@ const related: ToolRelated[] = [
 ---
 
 <ToolShell
-  title="Compress Image to Exact KB Online | FormFit"
-  description="Compress an image to a target file size — under 50 KB, 100 KB, or any limit. Downloads the highest-quality version that still fits. 100% in your browser, nothing uploaded."
+  title="Compress Image to Exact KB Online | Free Photo Compressor"
+  description="Compress image to exact KB — target 50 KB, 100 KB, or any file size limit. Free online photo compressor that finds the highest quality under your limit. Runs in your browser."
   path="/compress-image/"
   heading="Compress Image"
-  intro="Forms often reject images simply because they are too large. Tell FormFit the limit your form allows, and it will deliver the best-looking image that fits under it."
-  toolName="Exact File-Size Compressor"
+  intro="Forms often reject images simply because they are too large. Tell FormFit the exact file size your form allows — 20 KB, 50 KB, 100 KB, or any limit — and the image compressor delivers the highest-quality version that fits under it."
+  toolName="Exact File-Size Image Compressor"
   howTo={howTo}
   examples={examples}
   faq={faq}

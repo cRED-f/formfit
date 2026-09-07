@@ -1,0 +1,150 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import Container from '../../components/layout/Container.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'How does the JPG compressor reduce file size?',
+    a: 'A JPG file stores a photo using compression already, but quality can be tuned lower to shrink the file further. FormFit balances quality against file size, compressing just enough for your JPG to fit the limit while staying visually clean.',
+  },
+  {
+    q: 'Why are JPGs still too large even after compressing?',
+    a: 'If a JPG is very large in pixels — for example a 4000 × 3000 camera photo — no amount of quality reduction alone gets it under a small limit. FormFit then suggests safely reducing the dimensions, which removes far more bytes than quality tweaking.',
+  },
+  {
+    q: 'What is the best quality setting for a JPG?',
+    a: 'For photos: high quality is indistinguishable from the original and only modestly larger. For website images and form uploads with a size limit, balanced gives the best trade-off. FormFit auto-tunes the quality so you do not have to guess a number.',
+  },
+  {
+    q: 'Can I reduce a JPG to under 100 KB?',
+    a: 'Yes. Enter 100 as the target size and compress. Most phone photos come down to under 100 KB without visible loss, and 50 KB is usually achievable for cleanly-shot images too. The compressor suggests dimension changes only if quality would suffer.',
+  },
+  {
+    q: 'Does compressing a JPG reduce its resolution?',
+    a: 'Not by default. FormFit prefers to keep your pixel dimensions and adjust quality instead. Width and height only change if the file genuinely cannot fit the target — and never without telling you first.',
+  },
+  {
+    q: 'Is JPG compression online free and private?',
+    a: 'Yes. FormFit is a free, browser-based JPG compressor. Your image never leaves your device, so compressing a JPG online stays completely private.',
+  },
+];
+
+const howTo = [
+  'Upload the JPG you need to shrink.',
+  'Enter the target file size — the compressor defaults to JPG output.',
+  'Compress. FormFit tunes the quality so the JPG fits the limit.',
+  'Download the smaller JPG and upload it where the old one was rejected.',
+];
+
+const examples = [
+  '3.1 MB DSLR photo → under 200 KB JPG',
+  '800 KB phone photo → under 100 KB JPG',
+  'Enough quality retained that the resize is invisible to the eye',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Compress to KB', href: '/compress-to-kb/', description: 'Target 20, 50, or 100 KB exactly.', icon: 'compress' },
+  { title: 'Image Converter', href: '/image-converter/', description: 'Convert JPG, PNG, and WebP.', icon: 'convert' },
+  { title: 'Resize Image', href: '/resize-image/', description: 'Change width and height exactly.', icon: 'resize' },
+];
+---
+
+<ToolShell
+  title="JPG Compressor Online — Reduce JPG File Size | FormFit"
+  description="Compress JPG online — reduce JPG file size to 100 KB, 50 KB, or any limit. Free JPG compressor that keeps quality while shrinking your photo. Runs in your browser."
+  path="/jpg-compressor/"
+  heading="JPG Compressor"
+  intro="JPG is the format almost every form accepts — and also the format that arrives oversized straight from a phone or camera. Upload your JPG, enter the file-size limit, and the JPG compressor delivers the smallest clean version that fits."
+  toolName="Online JPG Compressor"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <CropPanel />
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input
+            id="compress-target"
+            label="Target file size"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            max="1000"
+            defaultValue="100"
+            unit="KB"
+          />
+          <Select
+            id="compress-format"
+            label="Output format"
+            options={[
+              { value: 'jpeg', label: 'JPG' },
+              { value: 'webp', label: 'WebP' },
+            ]}
+          />
+        </div>
+
+        <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+          JPG output is selected by default. If your photo cannot reach the target size without
+          damage, we'll suggest a safe dimension reduction rather than ruining the quality.
+        </p>
+
+        <div class="mt-6">
+          <Button size="lg" icon="compress" data-run="compress">
+            Compress JPG
+          </Button>
+        </div>
+      </div>
+      <ResultPanel slot="result" />
+    </UploadPanel>
+  </div>
+
+  <div slot="content">
+    <section class="bg-canvas">
+      <Container width="standard">
+        <div class="py-16">
+          <div class="grid gap-12 md:grid-cols-2">
+            <div>
+              <p class="text-caption-strong text-primary">Why JPGs get big</p>
+              <h2 class="mt-1 text-display-md font-semibold tracking-[-0.374px]">
+                The two levers of JPG compression
+              </h2>
+              <p class="mt-4 text-body text-ink-muted-80">
+                A JPG file size comes from two things: how many pixels it has, and how hard the
+                quality compression squeezes those pixels. Reducing either shrinks the file.
+                Compressing quality alone works until the JPG looks soft; after that, reducing
+                dimensions is what actually removes the bytes.
+              </p>
+            </div>
+            <div>
+              <p class="text-caption-strong text-primary">What stays the same</p>
+              <h2 class="mt-1 text-display-md font-semibold tracking-[-0.374px]">
+                Quality you can trust
+              </h2>
+              <p class="mt-4 text-body text-ink-muted-80">
+                FormFit compresses a JPG gradually and stops the moment it fits. For a target under
+                200 KB, most photos come out visually identical to the original — good enough that
+                the difference is only in the file size that finally satisfies the form.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  </div>
+</ToolShell>
+
+<script>
+  import { mountCompress } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountCompress(root);
+</script>

@@ -1,0 +1,178 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import Container from '../../components/layout/Container.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'How do I compress an image to 20 KB?',
+    a: 'Upload your image, enter 20 in the target file size field, and click Compress Image. FormFit finds the highest-quality version that fits under 20 KB. This is the most common limit for signatures, so start there if a form asks you to stay under 20 KB.',
+  },
+  {
+    q: 'How do I compress a photo to 50 KB?',
+    a: 'Enter 50 as the target file size and compress. 50 KB is a frequent requirement for logo and profile uploads. FormFit works back from full quality and stops as soon as the file fits under the 50 KB limit, so you keep as much detail as possible.',
+  },
+  {
+    q: 'Can I compress a JPEG to 100 KB or 200 KB?',
+    a: 'Yes. Enter 100 or 200 in the target field. For photos and document scans under 200 KB, JPG output usually keeps near-perfect quality, since photos compress well. FormFit supports compressing JPG, PNG, and WebP to any exact file size.',
+  },
+  {
+    q: 'What if the image cannot reach the target file size?',
+    a: 'Sometimes an image is so detailed that chopping bytes alone cannot hit a very small target without visible damage. FormFit tells you clearly and suggests safely reducing the dimensions, rather than silently ruining the quality.',
+  },
+  {
+    q: 'Does compressing to exact KB change the pixel dimensions?',
+    a: 'No. Preference is given to quality: FormFit compresses the bytes first while keeping your dimensions. Only if that cannot reach the target does it suggest shrinking width and height — always with your approval.',
+  },
+  {
+    q: 'Is compressing to a specific KB free and private?',
+    a: 'Yes. FormFit is a free, browser-based image compressor. Your image is processed on your own device and never uploaded to a server, so exact-KB compression stays private.',
+  },
+];
+
+const howTo = [
+  'Upload the image you need to shrink.',
+  'Enter the exact limit your form requires — e.g. 20, 50, or 100 KB.',
+  'Compress. FormFit finds the best quality that still fits under the limit.',
+  'Download the result and submit it — it now satisfies the file-size rule.',
+];
+
+const examples = [
+  'Compress image to 20 KB for a signature upload',
+  'Reduce a photo to 50 KB for a logo or profile picture',
+  'Bring a 2.3 MB scan down to exactly under 100 KB',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Compress Image', href: '/compress-image/', description: 'The general-purpose image compressor.', icon: 'compress' },
+  { title: 'JPG Compressor', href: '/jpg-compressor/', description: 'Reduce JPG file size specifically.', icon: 'convert' },
+  { title: 'Resize to Pixels', href: '/resize-to-pixels/', description: 'Set exact pixel dimensions.', icon: 'resize' },
+];
+---
+
+<ToolShell
+  title="Compress Image to 20 KB, 50 KB, 100 KB — Exact File Size | FormFit"
+  description="Compress image to 20 KB, 50 KB, 100 KB, 200 KB, or any exact file size. Free online photo compressor that targets the exact KB your form requires. Runs in your browser."
+  path="/compress-to-kb/"
+  heading="Compress Image to Exact KB"
+  intro="Every online form has a different file-size limit — 20 KB for a signature, 50 KB for a logo, 100 KB or 200 KB for a photo. Tell FormFit the exact number and it compresses your image to fit under that limit with the best quality possible."
+  toolName="Exact-KB Image Compressor"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <CropPanel />
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input
+            id="compress-target"
+            label="Target file size"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            max="1000"
+            defaultValue="50"
+            unit="KB"
+          />
+          <Select
+            id="compress-format"
+            label="Output format"
+            options={[
+              { value: 'jpeg', label: 'JPG' },
+              { value: 'webp', label: 'WebP' },
+            ]}
+          />
+        </div>
+
+        <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+          Keeping your pixel dimensions is preferred. If the file cannot reach the target size
+          without damage, we'll suggest reducing dimensions instead of guessing.
+        </p>
+
+        <div class="mt-6">
+          <Button size="lg" icon="compress" data-run="compress">
+            Compress Image
+          </Button>
+        </div>
+      </div>
+      <ResultPanel slot="result" />
+    </UploadPanel>
+  </div>
+
+  <div slot="content">
+    <section class="bg-canvas">
+      <Container width="standard">
+        <div class="py-16">
+          <p class="text-caption-strong text-primary">Common file-size limits</p>
+          <h2 class="mt-1 text-display-md font-semibold tracking-[-0.374px]">
+            What "compress image to 20 KB, 50 KB, or 100 KB" really means
+          </h2>
+          <p class="mt-4 max-w-3xl text-body text-ink-muted-80">
+            Many application forms state a maximum file size instead of asking for a specific one.
+            "Under 50 KB", "max 100 KB", and "must be less than 20 KB" are all the same instruction
+            wrapped differently: produce the smallest good-looking file that fits. The table below
+            shows the limits you will most often meet.
+          </p>
+          <div class="mt-8 overflow-x-auto rounded-xl border border-hairline bg-pearl">
+            <table class="w-full min-w-[560px] text-left text-body">
+              <thead>
+                <tr class="border-b border-hairline text-caption-strong uppercase tracking-wide text-ink-muted-48">
+                  <th class="px-5 py-3">Limit</th>
+                  <th class="px-5 py-3">Most common for</th>
+                  <th class="px-5 py-3">Typical result</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink-muted-80">
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">20 KB</td>
+                  <td class="px-5 py-4">Signatures, small logos, tick-mark images</td>
+                  <td class="px-5 py-4">Signature cropped and compressed to fit easily</td>
+                </tr>
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">30 KB</td>
+                  <td class="px-5 py-4">Compact icons and symbol images</td>
+                  <td class="px-5 py-4">Clean edges with modest compression</td>
+                </tr>
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">50 KB</td>
+                  <td class="px-5 py-4">Logos, avatars, profile pictures</td>
+                  <td class="px-5 py-4">Good quality at a common, friendly limit</td>
+                </tr>
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">100 KB</td>
+                  <td class="px-5 py-4">Passport- and ID-style photos from phones</td>
+                  <td class="px-5 py-4">Near-original clarity, no visible damage</td>
+                </tr>
+                <tr>
+                  <td class="px-5 py-4 font-semibold text-ink">200 KB</td>
+                  <td class="px-5 py-4">Document scans and larger uploads</td>
+                  <td class="px-5 py-4">Effectively the original, comfortably under limit</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-6 max-w-3xl text-body text-ink-muted-80">
+            The point of an exact limit is that you no longer have to guess. Enter the number a form
+            gives you, and the compressor lands the file just under it — neither oversized nor
+            needlessly degraded.
+          </p>
+        </div>
+      </Container>
+    </section>
+  </div>
+</ToolShell>
+
+<script>
+  import { mountCompress } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountCompress(root);
+</script>

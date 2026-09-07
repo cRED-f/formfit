@@ -10,20 +10,28 @@ import Select from '../../components/ui/Select.astro';
 
 const faq = [
   {
+    q: 'How do I resize an image to 300×300 pixels?',
+    a: 'Upload your photo, enter 300 in the Width field and 300 in the Height field, and click Resize Image. FormFit produces a 300×300 pixel image ready for online forms. This works for any dimension — 100×100, 200×200, 500×500, and more.',
+  },
+  {
     q: 'Will resizing damage my image quality?',
-    a: 'Resizing changes the pixel dimensions of your image. Shrinking a large photo keeps it sharp, while enlarging a small image can look soft because extra pixels have to be invented. FormFit shows the original and the result side by side so you can check quality before downloading.',
+    a: 'Shrinking a large photo keeps it sharp because pixels are removed cleanly. Enlarging a small image can look soft because extra pixels have to be invented. FormFit shows a live preview so you can check quality before downloading.',
   },
   {
     q: 'What output formats can I choose?',
-    a: 'JPG for photos, PNG for images that need transparency, or WebP — a modern format with excellent compression for web uploads. All three are supported.',
+    a: 'JPG for photos and general uploads, PNG for images that need transparency, or WebP for small file sizes with excellent quality. All three are supported across the image resizer.',
   },
   {
     q: 'Do I need to keep the aspect ratio?',
-    a: 'No. You can set an exact width and height, or lock the aspect ratio so typing one value automatically updates the other and the photo is never stretched.',
+    a: 'No. You can set exact width and height in pixels to match your form\'s requirements, or lock the aspect ratio so typing one value automatically updates the other and the photo is never stretched.',
+  },
+  {
+    q: 'Can I resize a photo for a job application or passport?',
+    a: 'Yes. Enter the exact pixel dimensions your form requires — common sizes include 300×300, 200×200, and 350×450. The image resizer maintains sharp quality and lets you crop to the right area before resizing.',
   },
   {
     q: 'Is my image uploaded anywhere?',
-    a: 'No. FormFit resizes images entirely inside your browser. Your photo never leaves your device.',
+    a: 'No. FormFit is a browser-based image resizer — all processing happens on your device. Your photo never leaves your computer or phone, making it completely private.',
   },
 ];
 
@@ -48,11 +56,11 @@ const related: ToolRelated[] = [
 ---
 
 <ToolShell
-  title="Resize Image Online — Change Image Dimensions | FormFit"
-  description="Resize an image to exact pixel dimensions — width, height, or both — and download it as JPG, PNG, or WebP. Free, private, and runs entirely in your browser."
+  title="Resize Image Online — Exact Pixel Dimensions | FormFit"
+  description="Resize image to exact pixels — set width, height, or both. Free online photo resizer for profile pictures, form uploads, and more. JPG, PNG, WebP. Runs in your browser."
   path="/resize-image/"
   heading="Resize Image"
-  intro="Change an image to an exact pixel size — like 300 × 300 or 1024 × 768. Set the width and height you need, lock the aspect ratio or turn it off, and download the result."
+  intro="Change an image to exact pixel dimensions — 300 × 300, 500 × 500, 1024 × 768, or any size your form requires. Set the width and height in pixels, lock the aspect ratio or turn it off, and download the result as JPG, PNG, or WebP."
   toolName="Image Resizer"
   howTo={howTo}
   examples={examples}

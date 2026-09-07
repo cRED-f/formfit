@@ -7,10 +7,20 @@ const crumbs = [{ name: 'Home', href: '/' }, { name: 'Contact' }];
 ---
 
 <Layout
-  title="Contact FormFit | FormFit"
-  description="Questions, feedback, or feature ideas for FormFit? Get in touch at hello@formfit.com."
+  title="Contact FormFit — Questions & Feedback | FormFit"
+  description="Questions about FormFit's free image compressor, resizer, or converter? Feature ideas, bug reports, or feedback — get in touch at hello@formfit.com."
   path="/contact/"
 >
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://formfit.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://formfit.com/contact/" }
+      ]
+    }
+  </script>
   <Container width="narrow">
     <div class="py-16">
       <Breadcrumbs items={crumbs} />

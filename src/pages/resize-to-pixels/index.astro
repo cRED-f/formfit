@@ -1,0 +1,174 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import Container from '../../components/layout/Container.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import PreviewPanel from '../../components/tool/PreviewPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'How do I resize an image to 100×100 pixels?',
+    a: 'Upload your image, enter 100 in the Width field and 100 in the Height field, and click Resize Image. FormFit produces an exact 100×100 pixel image. This works for any size — 100×100, 200×200, 300×300, 500×500, 600×600, and more.',
+  },
+  {
+    q: 'How do I make a photo 200×200 or 300×300?',
+    a: 'Enter 200 × 200 or 300 × 300 into the width and height fields. These are common profile-picture sizes. Cropping first lets you centre the important part before resizing, so faces and logos stay sharp and well-framed.',
+  },
+  {
+    q: 'Can I resize to exact pixels without stretching the image?',
+    a: 'Yes — two ways. Keep "maintain aspect ratio" turned on to scale cleanly, or crop first with the crop handles so the part you keep already matches the target proportions. FormFit never silently stretches your photo.',
+  },
+  {
+    q: 'Is 500×500 and 600×600 the right size for a profile picture?',
+    a: 'For most social profiles, 500×500 or 600×600 is large enough to stay sharp while still being a small file. Enter the dimensions your platform or form asks for, and FormFit produces exactly that pixel size.',
+  },
+  {
+    q: 'What formats can I resize to?',
+    a: 'JPG for photos and general uploads, PNG when you need transparency, or WebP for the smallest files with excellent quality. The image resizer outputs all three at your chosen pixel dimensions.',
+  },
+  {
+    q: 'Is resizing to exact pixels free and private?',
+    a: 'Yes. FormFit is a free, browser-based image resizer. Your photo is resized entirely on your device and never uploaded, so your picture stays private.',
+  },
+];
+
+const howTo = [
+  'Upload the image you want to resize.',
+  'Enter the exact pixel width and height — e.g. 100 × 100 or 300 × 300.',
+  'Crop to the area that matters, or keep the aspect ratio locked.',
+  'Resize, preview the result, and download the exact-size file.',
+];
+
+const examples = [
+  '1920 × 1080 photo → exact 300 × 300 profile picture',
+  'Reduce an image to 100 × 100 px for a small avatar',
+  'Fit a headshot into a 500 × 500 upload box without stretching',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Resize Image', href: '/resize-image/', description: 'The general-purpose image resizer.', icon: 'resize' },
+  { title: 'Compress to KB', href: '/compress-to-kb/', description: 'Compress to 20, 50, or 100 KB.', icon: 'compress' },
+  { title: 'Form Photos', href: '/form-photos/', description: 'Prepare a photo for an online form.', icon: 'signature' },
+];
+---
+
+<ToolShell
+  title="Resize Photo to Exact Pixels — 100×100, 200×200, 300×300 | FormFit"
+  description="Resize image to exact pixels: 100×100, 200×200, 300×300, 500×500, 600×600, or any dimension. Free online photo resizer with crop and live preview. Runs in your browser."
+  path="/resize-to-pixels/"
+  heading="Resize Photo to Exact Pixels"
+  intro="Forms and platforms ask for exact pixel sizes — 100 × 100, 200 × 200, 300 × 300, 500 × 500. Enter the width and height you need, crop to the important part, and FormFit resizes your photo to precisely those dimensions."
+  toolName="Exact-Pixel Image Resizer"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <CropPanel />
+
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input id="resize-width" label="Width" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
+          <Input id="resize-height" label="Height" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
+        </div>
+
+        <div class="mt-5 flex flex-wrap items-end gap-x-8 gap-y-5">
+          <label class="inline-flex cursor-pointer select-none items-center gap-2 text-[15px] text-ink">
+            <input id="resize-aspect" type="checkbox" checked class="h-4 w-4 accent-primary" />
+            Maintain aspect ratio
+          </label>
+          <div class="w-full sm:w-64">
+            <Select
+              id="resize-format"
+              label="Output format"
+              options={[
+                { value: 'jpeg', label: 'JPG' },
+                { value: 'png', label: 'PNG' },
+                { value: 'webp', label: 'WebP' },
+              ]}
+            />
+          </div>
+        </div>
+
+        <PreviewPanel />
+
+        <div class="mt-6">
+          <Button size="lg" data-run="resize">Resize Image</Button>
+        </div>
+      </div>
+      <ResultPanel slot="result" />
+    </UploadPanel>
+  </div>
+
+  <div slot="content">
+    <section class="bg-canvas">
+      <Container width="standard">
+        <div class="py-16">
+          <p class="text-caption-strong text-primary">Common dimension requirements</p>
+          <h2 class="mt-1 text-display-md font-semibold tracking-[-0.374px]">
+            Common exact pixel sizes, and the photos that fit them
+          </h2>
+          <p class="mt-4 max-w-3xl text-body text-ink-muted-80">
+            When a form says "photo must be 300 × 300 pixels", it means exactly that — no guessing.
+            Different types of uploads use different standard sizes, so knowing what you are preparing
+            helps you choose. Here is how the common dimensions are used.
+          </p>
+          <div class="mt-8 overflow-x-auto rounded-xl border border-hairline bg-pearl">
+            <table class="w-full min-w-[560px] text-left text-body">
+              <thead>
+                <tr class="border-b border-hairline text-caption-strong uppercase tracking-wide text-ink-muted-48">
+                  <th class="px-5 py-3">Dimension</th>
+                  <th class="px-5 py-3">Most common for</th>
+                  <th class="px-5 py-3">What to crop first</th>
+                </tr>
+              </thead>
+              <tbody class="text-ink-muted-80">
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">100 × 100</td>
+                  <td class="px-5 py-4">Tiny avatars, forum icons, bookmarks</td>
+                  <td class="px-5 py-4">Centre the main subject — detail is small</td>
+                </tr>
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">200 × 200</td>
+                  <td class="px-5 py-4">Profile thumbnails, team directories</td>
+                  <td class="px-5 py-4">Square crop around the face or logo</td>
+                </tr>
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">300 × 300</td>
+                  <td class="px-5 py-4">Profile pictures, ID-style photos</td>
+                  <td class="px-5 py-4">Head and shoulders, straight-on angle</td>
+                </tr>
+                <tr class="border-b border-hairline">
+                  <td class="px-5 py-4 font-semibold text-ink">500 × 500</td>
+                  <td class="px-5 py-4">Social avatars, product images</td>
+                  <td class="px-5 py-4">Whole subject with a little breathing room</td>
+                </tr>
+                <tr>
+                  <td class="px-5 py-4 font-semibold text-ink">600 × 600</td>
+                  <td class="px-5 py-4">High-resolution avatars and listings</td>
+                  <td class="px-5 py-4">Keep it clean — still a square crop</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-6 max-w-3xl text-body text-ink-muted-80">
+            The golden rule for exact pixels: crop first, resize second. If the part of the photo you
+            keep already has the right shape, resizing it to the exact dimension never distorts it.
+          </p>
+        </div>
+      </Container>
+    </section>
+  </div>
+</ToolShell>
+
+<script>
+  import { mountResize } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountResize(root);
+</script>

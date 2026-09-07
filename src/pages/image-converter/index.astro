@@ -8,20 +8,28 @@ import Select from '../../components/ui/Select.astro';
 
 const faq = [
   {
+    q: 'How do I convert JPG to PNG online?',
+    a: 'Upload your JPG image, select PNG as the target format in the image converter, and click Convert. FormFit converts JPG to PNG instantly in your browser. You can also convert PNG to JPG, WebP to JPG, or any other combination.',
+  },
+  {
     q: 'Which format should I choose for a form?',
     a: 'If the form asks for a specific ending — .jpg, .png, or .webp — choose that one. Otherwise JPG is the safest for photos and PNG is best when your image needs a transparent background.',
   },
   {
     q: 'Will converting PNG to JPG lose the transparency?',
-    a: 'Yes. JPG does not support transparency, so converting a PNG with transparent areas fills them with white. Use PNG or WebP when transparency matters.',
+    a: 'Yes. JPG does not support transparency, so the image converter fills transparent areas with white when converting PNG to JPG. Use PNG or WebP when transparency matters.',
   },
   {
     q: 'Is WebP accepted by online forms?',
-    a: 'Not always. Some older portals only accept JPG or PNG. WebP is a great choice when the form accepts it, because it combines small file size with excellent quality.',
+    a: 'Not always. Some older portals only accept JPG or PNG. WebP is a great choice when the form accepts it, because it combines small file size with excellent quality. FormFit lets you convert WebP to JPG or PNG quickly.',
   },
   {
-    q: 'Does conversion upload my image?',
-    a: 'No. Conversion happens entirely in your browser. Your image never leaves your device.',
+    q: 'Can I convert an image and compress it at the same time?',
+    a: 'Yes. The image converter offers quality presets — High, Balanced, and Small — so converting to JPG or WebP also reduces file size. For precise file-size targeting, use the Compress Image tool after converting.',
+  },
+  {
+    q: 'Does the image converter upload my image?',
+    a: 'No. Conversion happens entirely in your browser. Your image never leaves your device, making FormFit a private and secure image converter.',
   },
 ];
 
@@ -46,12 +54,12 @@ const related: ToolRelated[] = [
 ---
 
 <ToolShell
-  title="Convert JPG, PNG & WebP Images Online | FormFit"
-  description="Convert images between JPG, PNG, and WebP right in your browser. Choose the format your form asks for and download the result instantly — free and private."
+  title="Image Converter Online — JPG, PNG, WebP | FormFit"
+  description="Convert image between JPG, PNG, and WebP online. Free image converter with quality presets — convert JPG to PNG, PNG to WebP, and more. Runs in your browser."
   path="/image-converter/"
   heading="Image Converter"
-  intro="Forms usually insist on a specific format. Upload any JPG, PNG, or WebP and convert it to the format your application asks for — quickly, in your browser, without uploading it anywhere."
-  toolName="Image Converter"
+  intro="Forms usually insist on a specific format. Upload any JPG, PNG, or WebP and convert it to the format your application asks for — JPG, PNG, or WebP. The image converter runs entirely in your browser, quickly and privately."
+  toolName="Online Image Converter"
   howTo={howTo}
   examples={examples}
   faq={faq}

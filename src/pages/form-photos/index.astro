@@ -1,0 +1,278 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Container from '../../components/layout/Container.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import IconTile from '../../components/ui/IconTile.astro';
+import Button from '../../components/ui/Button.astro';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Prepare Photo for Online Forms' },
+];
+
+const faq = [
+  {
+    q: 'Why do online forms reject my photo?',
+    a: 'Almost always for one of three reasons: the file is too large (over the stated KB limit), the dimensions are wrong (not the exact pixels requested), or the format is wrong (a PNG or WebP where only JPG is accepted). Fix each with the matching FormFit tool and the upload succeeds.',
+  },
+  {
+    q: 'How do I make a photo under 100 KB for an application form?',
+    a: 'Use the compressor and enter 100 KB as the target size. FormFit returns the highest-quality version that fits under the limit. If the photo is already fairly small, an even gentler target like 200 KB will look perfect.',
+  },
+  {
+    q: 'What photo requirements are common for job and exam forms?',
+    a: 'Soft copies are usually requested as exact pixel dimensions (for example 300 × 300 or 200 × 200), a maximum file size (commonly 50 KB to 200 KB), and either JPG or PNG format. Always follow the exact numbers printed on the form you are filling, since they vary by institution.',
+  },
+  {
+    q: 'How should I crop my face for an application photo?',
+    a: 'Square sizes work best head-and-shoulders, with your face centred and a little space above the head. Before resizing to exact pixels, crop the image in FormFit so the part you keep already matches the target shape — that avoids any distortion.',
+  },
+  {
+    q: 'Can I use FormFit for passport-photo-style uploads?',
+    a: 'FormFit helps with the technical parts — exact pixel size, exact KB, and JPG/PNG format. Requirements for government passport photographs also include rules about background, lighting, and expression that vary by country and are set by the issuing authority, so confirm those from the official source before submitting.',
+  },
+  {
+    q: 'Is preparing a form photo free and private?',
+    a: 'Yes. Every FormFit tool is free and runs in your browser. Your photo is processed on your own device and never uploaded, so even a sensitive application photo stays private.',
+  },
+];
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://formfit.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Prepare Photo for Online Forms', item: 'https://formfit.com/form-photos/' },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<Layout
+  title="Prepare Photo for Online Forms — Job, Exam & Passport Uploads | FormFit"
+  description="Prepare a photo for online forms — job applications, exams, university and ID uploads. Compress to exact KB, resize to exact pixels, and convert format, free and private."
+  path="/form-photos/"
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <Container width="standard">
+    <div class="pt-6">
+      <Breadcrumbs items={crumbs} />
+    </div>
+  </Container>
+
+  <!-- Hero -->
+  <section class="bg-canvas">
+    <Container width="standard">
+      <div class="pb-8">
+        <h1 class="mt-7 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">
+          Prepare a Photo for Online Forms
+        </h1>
+        <p class="mt-5 max-w-3xl text-lead text-ink-muted-80">
+          Job applications, exam registrations, university admissions, and ID renewal portals all
+          ask for the same thing: a photo that fits their exact rules. Rejected often means "too
+          large", "wrong size", or "wrong format". Here is how to fix all three in under a minute,
+          free, with your photo never leaving your device.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Step-by-step walkthrough -->
+  <section class="bg-parchment">
+    <Container width="standard">
+      <div class="py-16">
+        <p class="text-caption-strong text-primary">The checklist</p>
+        <h2 class="mt-1 text-display-md font-semibold tracking-[-0.374px]">
+          Five checks before you submit any form photo
+        </h2>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          <div class="rounded-xl border border-hairline bg-canvas p-6">
+            <div class="flex items-center gap-3">
+              <IconTile name="upload" size="sm" />
+              <h3 class="text-body font-semibold">1. Check the exact requirements first</h3>
+            </div>
+            <p class="mt-3 text-body text-ink-muted-80">
+              Look for the small print on the form: maximum KB, pixel dimensions, and accepted
+              format (usually "JPG" or "JPEG", sometimes PNG). Write down the exact numbers — every
+              institution sets its own limits.
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-hairline bg-canvas p-6">
+            <div class="flex items-center gap-3">
+              <IconTile name="compress" size="sm" />
+              <h3 class="text-body font-semibold">2. Too large? Compress to the exact KB</h3>
+            </div>
+            <p class="mt-3 text-body text-ink-muted-80">
+              Open the
+              <a href="/compress-image/" class="font-semibold text-primary hover:underline">compressor</a>,
+              enter the limit the form states — 50 KB, 100 KB, 200 KB — and download the file that
+              fits under it. This fixes the most common rejection reason.
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-hairline bg-canvas p-6">
+            <div class="flex items-center gap-3">
+              <IconTile name="resize" size="sm" />
+              <h3 class="text-body font-semibold">3. Wrong size? Resize to exact pixels</h3>
+            </div>
+            <p class="mt-3 text-body text-ink-muted-80">
+              Use the
+              <a href="/resize-image/" class="font-semibold text-primary hover:underline">resizer</a>
+              to reach the exact stated dimensions, such as 300 × 300 or 200 × 200. Crop to your
+              face first so the output frames you correctly.
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-hairline bg-canvas p-6">
+            <div class="flex items-center gap-3">
+              <IconTile name="convert" size="sm" />
+              <h3 class="text-body font-semibold">4. Wrong format? Convert it</h3>
+            </div>
+            <p class="mt-3 text-body text-ink-muted-80">
+              If the form only accepts JPG but your phone saves PNG or WebP, the
+              <a href="/image-converter/" class="font-semibold text-primary hover:underline">converter</a>
+              switches formats in seconds without uploading anything.
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-hairline bg-canvas p-6">
+            <div class="flex items-center gap-3">
+              <IconTile name="signature" size="sm" />
+              <h3 class="text-body font-semibold">5. Don't forget the signature</h3>
+            </div>
+            <p class="mt-3 text-body text-ink-muted-80">
+              Many application portals also need a signature image, often under 20 KB. Use the
+              <a href="/signature-resizer/" class="font-semibold text-primary hover:underline">signature resizer</a>
+              to crop, compress, and centre it automatically.
+            </p>
+          </div>
+
+          <div class="rounded-xl border border-hairline bg-canvas p-6">
+            <div class="flex items-center gap-3">
+              <IconTile name="check" size="sm" />
+              <h3 class="text-body font-semibold">6. Confirm against the official instructions</h3>
+            </div>
+            <p class="mt-3 text-body text-ink-muted-80">
+              For government, passport, and country-specific requirements, rules about background,
+              lighting, and expression are set by the official authority. Always confirm those
+              details from the official source before submitting — FormFit nails the technical file
+              side, but only the authority's own instructions define the photo rules.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- At-a-glance -->
+  <section class="bg-canvas">
+    <Container width="standard">
+      <div class="py-16 text-center">
+        <p class="text-caption-strong text-primary">At a glance</p>
+        <h2 class="mx-auto mt-1 max-w-2xl text-display-md font-semibold tracking-[-0.374px]">
+          Which tool fixes which rejection
+        </h2>
+        <div class="mx-auto mt-8 max-w-xl space-y-3 text-left">
+          <p class="rounded-lg bg-parchment px-4 py-3 text-body text-ink-muted-80">
+            <span class="font-semibold text-ink">"File too large"</span> → Compress to the exact KB
+            limit stated on the form.
+          </p>
+          <p class="rounded-lg bg-parchment px-4 py-3 text-body text-ink-muted-80">
+            <span class="font-semibold text-ink">"Invalid dimensions"</span> → Resize to the exact
+            pixel size, cropping first so nothing distorts.
+          </p>
+          <p class="rounded-lg bg-parchment px-4 py-3 text-body text-ink-muted-80">
+            <span class="font-semibold text-ink">"Format not allowed"</span> → Convert to the
+            accepted JPG or PNG format.
+          </p>
+        </div>
+
+        <h2 class="mx-auto mt-16 max-w-2xl text-display-md font-semibold tracking-[-0.374px]">
+          Frequently asked questions
+        </h2>
+        <div class="mx-auto mt-9 max-w-3xl text-left">
+          <details
+            class="group rounded-xl border border-hairline bg-pearl px-5 py-4 open:pb-5"
+            name="form-photos-faq"
+          >
+            <summary class="cursor-pointer select-none list-none text-body font-semibold text-ink">
+              {faq[0].q}
+              <span class="float-right mt-1 text-primary transition-transform group-open:rotate-45">＋</span>
+            </summary>
+            <p class="mt-3 text-body text-ink-muted-80">{faq[0].a}</p>
+          </details>
+          <details
+            class="group rounded-xl border border-hairline bg-pearl px-5 py-4 open:pb-5"
+            name="form-photos-faq"
+          >
+            <summary class="cursor-pointer select-none list-none text-body font-semibold text-ink">
+              {faq[1].q}
+              <span class="float-right mt-1 text-primary transition-transform group-open:rotate-45">＋</span>
+            </summary>
+            <p class="mt-3 text-body text-ink-muted-80">{faq[1].a}</p>
+          </details>
+          <details
+            class="group rounded-xl border border-hairline bg-pearl px-5 py-4 open:pb-5"
+            name="form-photos-faq"
+          >
+            <summary class="cursor-pointer select-none list-none text-body font-semibold text-ink">
+              {faq[2].q}
+              <span class="float-right mt-1 text-primary transition-transform group-open:rotate-45">＋</span>
+            </summary>
+            <p class="mt-3 text-body text-ink-muted-80">{faq[2].a}</p>
+          </details>
+          <details
+            class="group rounded-xl border border-hairline bg-pearl px-5 py-4 open:pb-5"
+            name="form-photos-faq"
+          >
+            <summary class="cursor-pointer select-none list-none text-body font-semibold text-ink">
+              {faq[3].q}
+              <span class="float-right mt-1 text-primary transition-transform group-open:rotate-45">＋</span>
+            </summary>
+            <p class="mt-3 text-body text-ink-muted-80">{faq[3].a}</p>
+          </details>
+          <details
+            class="group rounded-xl border border-hairline bg-pearl px-5 py-4 open:pb-5"
+            name="form-photos-faq"
+          >
+            <summary class="cursor-pointer select-none list-none text-body font-semibold text-ink">
+              {faq[4].q}
+              <span class="float-right mt-1 text-primary transition-transform group-open:rotate-45">＋</span>
+            </summary>
+            <p class="mt-3 text-body text-ink-muted-80">{faq[4].a}</p>
+          </details>
+          <details
+            class="group rounded-xl border border-hairline bg-pearl px-5 py-4 open:pb-5"
+            name="form-photos-faq"
+          >
+            <summary class="cursor-pointer select-none list-none text-body font-semibold text-ink">
+              {faq[5].q}
+              <span class="float-right mt-1 text-primary transition-transform group-open:rotate-45">＋</span>
+            </summary>
+            <p class="mt-3 text-body text-ink-muted-80">{faq[5].a}</p>
+          </details>
+        </div>
+
+        <div class="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <Button href="/compress-image/" size="lg">Compress my photo</Button>
+          <Button href="/resize-image/" size="lg" variant="secondary">Resize to exact pixels</Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</Layout>

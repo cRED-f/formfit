@@ -10,20 +10,28 @@ import Select from '../../components/ui/Select.astro';
 
 const faq = [
   {
+    q: 'How do I resize a signature to 20 KB for an online form?',
+    a: 'Upload your signature photo, set the width and height (commonly 300×80 pixels), enter 20 in the Maximum size field, and click Prepare Signature. The signature resizer automatically crops empty space and compresses to fit under 20 KB.',
+  },
+  {
     q: 'Do signatures need a transparent background?',
-    a: 'Usually not. Most online forms just need a clean signature. FormFit can keep the original background, replace it with plain white, or make it transparent for documents where the signature sits on top of other content.',
+    a: 'Usually not. Most online forms just need a clean signature on white. FormFit can keep the original background, replace it with plain white, or make it transparent for documents where the signature sits on top of other content.',
   },
   {
     q: 'My signature is a photo of paper — can I use it?',
-    a: 'Yes. Take a clear photo of the signature, upload it, and FormFit crops the surrounding paper, centers the signature, and compresses it to the size your form requires.',
+    a: 'Yes. Take a clear photo of the signature, upload it, and the signature compressor crops the surrounding paper, centers the ink, and compresses it to the exact file size and dimensions your form requires.',
   },
   {
-    q: 'What size should a signature be?',
-    a: 'Many forms ask for something close to 300 × 80 pixels under 20 KB. FormFit lets you enter the exact width, height, and size your specific form requires.',
+    q: 'What size should a signature be for a form?',
+    a: 'Many forms ask for something close to 300×80 pixels under 20 KB. Others want 200×60 or 350×100. FormFit lets you enter the exact width, height, and maximum file size your specific form requires.',
+  },
+  {
+    q: 'Can I compress a signature to exact KB?',
+    a: 'Yes. Enter the target file size in the Maximum size field — 10 KB, 20 KB, 30 KB, 50 KB, or any limit. The signature compressor finds the best quality that fits under it while maintaining crisp ink edges.',
   },
   {
     q: 'Is my signature private?',
-    a: 'Yes. Signatures are processed entirely in your browser and never uploaded to FormFit servers.',
+    a: 'Yes. FormFit is a browser-based signature resizer — signatures are processed entirely on your device and never uploaded to any server.',
   },
 ];
 
@@ -48,12 +56,12 @@ const related: ToolRelated[] = [
 ---
 
 <ToolShell
-  title="Signature Resizer — Resize Signature Online | FormFit"
-  description="Prepare an electronic signature for online forms: crop, resize, and compress it to the exact width, height, and file size your application requires. Runs in your browser."
+  title="Signature Resizer Online — Crop & Compress | FormFit"
+  description="Resize signature for online forms — crop, compress to exact KB, and set exact dimensions. Free online signature resizer with background removal. Runs in your browser."
   path="/signature-resizer/"
   heading="Signature Resizer"
-  intro="Application forms are picky about signatures — usually a specific width, height, and a tiny file size. Upload yours and FormFit crops, centers, resizes, and compresses it to fit the requirement."
-  toolName="Signature Resizer"
+  intro="Application forms are picky about signatures — usually a specific width, height, and a tiny file size like 20 KB. Upload yours and FormFit's signature resizer automatically crops empty space, centers the signature, and compresses it to fit the exact requirement."
+  toolName="Online Signature Resizer"
   howTo={howTo}
   examples={examples}
   faq={faq}
