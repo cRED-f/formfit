@@ -1,0 +1,93 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'Do signatures need a transparent background?',
+    a: 'Usually not. Most online forms just need a clean signature. FormFit can keep the original background, replace it with plain white, or make it transparent for documents where the signature sits on top of other content.',
+  },
+  {
+    q: 'My signature is a photo of paper — can I use it?',
+    a: 'Yes. Take a clear photo of the signature, upload it, and FormFit crops the surrounding paper, centers the signature, and compresses it to the size your form requires.',
+  },
+  {
+    q: 'What size should a signature be?',
+    a: 'Many forms ask for something close to 300 × 80 pixels under 20 KB. FormFit lets you enter the exact width, height, and size your specific form requires.',
+  },
+  {
+    q: 'Is my signature private?',
+    a: 'Yes. Signatures are processed entirely in your browser and never uploaded to FormFit servers.',
+  },
+];
+
+const howTo = [
+  'Upload a photo or file of your signature.',
+  'Enter the width, height, and maximum size your form requires.',
+  'Choose the background: keep it, make it white, or make it transparent.',
+  'FormFit crops, centers, resizes, and compresses — download the result.',
+];
+
+const examples = [
+  'Signature photo → 300 × 80 px, under 20 KB',
+  'Whitespace around the signature removed automatically',
+  'Transparent-background signature for contracts',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Resize Image', href: '/resize-image/', description: 'Change width and height exactly.', icon: 'resize' },
+  { title: 'Compress Image', href: '/compress-image/', description: 'Reduce an image to a target file size.', icon: 'compress' },
+  { title: 'Image Converter', href: '/image-converter/', description: 'Convert JPG, PNG, and WebP.', icon: 'convert' },
+];
+---
+
+<ToolShell
+  title="Signature Resizer — Resize Signature Online | FormFit"
+  description="Prepare an electronic signature for online forms: crop, resize, and compress it to the exact width, height, and file size your application requires. Runs in your browser."
+  path="/signature-resizer/"
+  heading="Signature Resizer"
+  intro="Application forms are picky about signatures — usually a specific width, height, and a tiny file size. Upload yours and FormFit crops, centers, resizes, and compresses it to fit the requirement."
+  toolName="Signature Resizer"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <div class="grid gap-5 sm:grid-cols-3">
+          <Input id="sig-width" label="Width" type="number" inputmode="numeric" min="1" defaultValue="300" unit="px" />
+          <Input id="sig-height" label="Height" type="number" inputmode="numeric" min="1" defaultValue="80" unit="px" />
+          <Input id="sig-kb" label="Maximum size" type="number" inputmode="numeric" min="1" defaultValue="20" unit="KB" />
+        </div>
+
+        <div class="mt-5 w-full sm:w-72">
+          <Select
+            id="sig-background"
+            label="Background"
+            options={[
+              { value: 'original', label: 'Original' },
+              { value: 'white', label: 'White' },
+              { value: 'transparent', label: 'Transparent' },
+            ]}
+          />
+        </div>
+
+        <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+          We automatically crop empty space around the signature, keep its proportions, and center it
+          in the frame.
+        </p>
+
+        <div class="mt-6">
+          <Button size="lg" icon="signature">
+            Prepare Signature
+          </Button>
+        </div>
+      </div>
+    </UploadPanel>
+  </div>
+</ToolShell>

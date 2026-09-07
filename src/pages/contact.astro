@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Contact' }];
+---
+
+<Layout
+  title="Contact FormFit | FormFit"
+  description="Questions, feedback, or feature ideas for FormFit? Get in touch at hello@formfit.com."
+  path="/contact/"
+>
+  <Container width="narrow">
+    <div class="py-16">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-7 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">Contact</h1>
+      <p class="mt-5 text-lead text-ink-muted-80">
+        We read everything. Tell us what didn't work, what you'd love to see, or what stubborn form
+        you just defeated.
+      </p>
+
+      <div class="mt-12 space-y-12">
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Email</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            <a href="mailto:hello@formfit.com" class="font-semibold text-primary hover:underline">
+              hello@formfit.com
+            </a>
+          </p>
+          <p class="mt-3 text-body text-ink-muted-80">
+            For most things: questions, feedback, and feature ideas. We try to reply within a few
+            working days.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Bug reports</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            If a tool misbehaves, include the browser you were using, the image format, and what you
+            expected the result to be. Details help us fix it faster.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Security</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Found a security issue? Report it privately to hello@formfit.com rather than in public.
+          </p>
+        </section>
+      </div>
+    </div>
+  </Container>
+</Layout>

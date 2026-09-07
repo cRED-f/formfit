@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Button from '../components/ui/Button.astro';
+
+const popularTools = [
+  { href: '/resize-image/', label: 'Resize Image' },
+  { href: '/compress-image/', label: 'Compress Image' },
+  { href: '/signature-resizer/', label: 'Signature Resizer' },
+  { href: '/image-converter/', label: 'Image Converter' },
+];
+---
+
+<Layout
+  title="Page Not Found | FormFit"
+  description="This page doesn't exist. Head back to FormFit to resize, compress, or convert an image."
+  path="/404/"
+  noindex
+>
+  <section class="bg-canvas">
+    <Container width="standard">
+      <div class="py-24 text-center sm:py-32">
+        <p class="text-display-lg font-semibold text-primary">404</p>
+        <h1 class="mt-3 text-display-md font-semibold tracking-[-0.374px]">
+          This page doesn't exist
+        </h1>
+        <p class="mx-auto mt-4 max-w-md text-body text-ink-muted-80">
+          The link may be out of date, or the page may have moved. The tools below are exactly where
+          you left them.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Button href="/" variant="primary">
+            Back to Home
+          </Button>
+          <Button href="/compress-image/" variant="secondary">
+            Compress an Image
+          </Button>
+        </div>
+        <ul class="mx-auto mt-12 flex max-w-2xl flex-wrap justify-center gap-2.5">
+          {popularTools.map((tool) => (
+            <li>
+              <a
+                href={tool.href}
+                class="inline-block rounded-full border border-hairline bg-canvas px-4 py-2 text-caption text-ink-muted-80 transition-colors hover:text-primary"
+              >
+                {tool.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </section>
+</Layout>

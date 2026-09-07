@@ -1,0 +1,87 @@
+---
+import Container from './Container.astro';
+
+const toolLinks = [
+  { href: '/resize-image/', label: 'Resize Image' },
+  { href: '/compress-image/', label: 'Compress Image' },
+  { href: '/signature-resizer/', label: 'Signature Resizer' },
+  { href: '/image-converter/', label: 'Image Converter' },
+];
+
+const guideLinks = [
+  { href: '/guides/reduce-image-file-size/', label: 'How to reduce image file size' },
+  { href: '/guides/image-size-vs-dimensions/', label: 'Image size vs. dimensions' },
+  { href: '/guides/prepare-photo-for-online-form/', label: 'Prepare a photo for an online form' },
+];
+
+const companyLinks = [
+  { href: '/about/', label: 'About' },
+  { href: '/contact/', label: 'Contact' },
+  { href: '/privacy/', label: 'Privacy Policy' },
+];
+---
+
+<footer class="bg-parchment text-ink-muted-80">
+  <Container>
+    <div class="grid grid-cols-2 gap-x-10 gap-y-12 py-16 md:grid-cols-4">
+      <!-- Brand -->
+      <div class="col-span-2 md:col-span-1">
+        <a href="/" class="inline-flex items-center gap-2">
+          <img src="/icon.png" alt="" width="24" height="24" class="h-6 w-6 rounded-sm" />
+          <span class="text-body font-semibold text-ink">FormFit</span>
+        </a>
+        <p class="mt-5 max-w-xs text-fine-print leading-relaxed text-ink-muted-48">
+          Free browser-based tools to make any image upload-ready — resized, compressed, and
+          converted for online forms without your files ever leaving your device.
+        </p>
+      </div>
+
+      <!-- Tools -->
+      <nav aria-label="Tools">
+        <h2 class="text-caption-strong text-ink">Tools</h2>
+        <ul class="mt-5">
+          {toolLinks.map((l) => (
+            <li>
+              <a href={l.href} class="text-[17px] leading-[2.41] transition-colors hover:text-primary">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Guides -->
+      <nav aria-label="Guides">
+        <h2 class="text-caption-strong text-ink">Guides</h2>
+        <ul class="mt-5">
+          {guideLinks.map((l) => (
+            <li>
+              <a href={l.href} class="text-[17px] leading-[2.41] transition-colors hover:text-primary">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Company -->
+      <nav aria-label="Company">
+        <h2 class="text-caption-strong text-ink">Company</h2>
+        <ul class="mt-5">
+          {companyLinks.map((l) => (
+            <li>
+              <a href={l.href} class="text-[17px] leading-[2.41] transition-colors hover:text-primary">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="flex flex-col gap-2 border-t border-hairline py-8 text-fine-print text-ink-muted-48 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {new Date().getFullYear()} FormFit.com. All rights reserved.</p>
+      <p>Your images stay on your device.</p>
+    </div>
+  </Container>
+</footer>

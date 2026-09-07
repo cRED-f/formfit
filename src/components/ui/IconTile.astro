@@ -1,0 +1,59 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+/**
+ * Glassy icon chip — the Apple "circular control over a surface" grammar.
+ * A frosted translucent disc (backdrop blur + soft rim) holding a
+ * near-black icon. On dark tiles, switch to the opaque-glass 'dark' variant.
+ *
+ * Sizes:
+ *  - sm: 36px disc / 16px icon  (inline chips, cards)
+ *  - md: 52px disc / 22px icon  (feature tiles, section icons)
+ *  - lg: 72px disc / 30px icon  (hero / preview box)
+ */
+interface Props {
+  name: IconName;
+  size?: 'sm' | 'md' | 'lg';
+  /** 'light' = frosted glass for light surfaces (default), 'dark' = opaque glass for dark tiles. */
+  variant?: 'light' | 'dark';
+  /** Add the gentle ring pulse behind the disc (used on the empty preview box). */
+  pulse?: boolean;
+  class?: string;
+}
+
+const { name, size = 'md', variant = 'light', pulse = false, class: className } = Astro.props;
+
+const discs: Record<NonNullable<Props['size']>, string> = {
+  sm: 'h-9 w-9',
+  md: 'h-[52px] w-[52px]',
+  lg: 'h-[72px] w-[72px]',
+};
+
+const icons: Record<NonNullable<Props['size']>, number> = {
+  sm: 16,
+  md: 22,
+  lg: 30,
+};
+
+const surfaces: Record<NonNullable<Props['variant']>, string> = {
+  light:
+    'bg-[#d2d2d7]/45 border border-white/60 text-ink backdrop-blur-[14px] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_1px_3px_rgba(0,0,0,0.04)]',
+  dark:
+    'bg-black/30 border border-white/20 text-white backdrop-blur-[14px] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]',
+};
+---
+
+<div class={['relative inline-flex items-center justify-center', className].filter(Boolean).join(' ')}>
+  {pulse && (
+    <span
+      aria-hidden="true"
+      class={['absolute inset-0 rounded-full border-2 border-primary/40', discs[size]].join(' ')}
+      style="animation: ff-ring 2.4s ease-out infinite"
+    />
+  )}
+  <span class={['rounded-full', discs[size], surfaces[variant]].join(' ')}>
+    <span class="flex h-full w-full items-center justify-center">
+      <Icon name={name} size={icons[size]} />
+    </span>
+  </span>
+</div>

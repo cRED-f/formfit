@@ -1,0 +1,90 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'Which format should I choose for a form?',
+    a: 'If the form asks for a specific ending — .jpg, .png, or .webp — choose that one. Otherwise JPG is the safest for photos and PNG is best when your image needs a transparent background.',
+  },
+  {
+    q: 'Will converting PNG to JPG lose the transparency?',
+    a: 'Yes. JPG does not support transparency, so converting a PNG with transparent areas fills them with white. Use PNG or WebP when transparency matters.',
+  },
+  {
+    q: 'Is WebP accepted by online forms?',
+    a: 'Not always. Some older portals only accept JPG or PNG. WebP is a great choice when the form accepts it, because it combines small file size with excellent quality.',
+  },
+  {
+    q: 'Does conversion upload my image?',
+    a: 'No. Conversion happens entirely in your browser. Your image never leaves your device.',
+  },
+];
+
+const howTo = [
+  'Upload the image you need to convert.',
+  'Choose the target format: JPG, PNG, or WebP.',
+  'Pick a quality setting — higher quality means a larger file.',
+  'Convert, preview the result, then download.',
+];
+
+const examples = [
+  'PNG screenshot → compact JPG for a photo upload',
+  'WebP → JPG for a form that only accepts JPG',
+  'JPG → PNG when you need to paste a picture with a clear edge',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Resize Image', href: '/resize-image/', description: 'Change width and height exactly.', icon: 'resize' },
+  { title: 'Compress Image', href: '/compress-image/', description: 'Reduce an image to a target file size.', icon: 'compress' },
+  { title: 'Signature Resizer', href: '/signature-resizer/', description: 'Prepare a signature for online forms.', icon: 'signature' },
+];
+---
+
+<ToolShell
+  title="Convert JPG, PNG & WebP Images Online | FormFit"
+  description="Convert images between JPG, PNG, and WebP right in your browser. Choose the format your form asks for and download the result instantly — free and private."
+  path="/image-converter/"
+  heading="Image Converter"
+  intro="Forms usually insist on a specific format. Upload any JPG, PNG, or WebP and convert it to the format your application asks for — quickly, in your browser, without uploading it anywhere."
+  toolName="Image Converter"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Select
+            id="conv-format"
+            label="Convert to"
+            options={[
+              { value: 'jpeg', label: 'JPG' },
+              { value: 'png', label: 'PNG' },
+              { value: 'webp', label: 'WebP' },
+            ]}
+          />
+          <Select
+            id="conv-quality"
+            label="Quality"
+            options={[
+              { value: 'high', label: 'High — larger file' },
+              { value: 'balanced', label: 'Balanced' },
+              { value: 'small', label: 'Small — smaller file' },
+            ]}
+          />
+        </div>
+
+        <div class="mt-6">
+          <Button size="lg" icon="convert">
+            Convert Image
+          </Button>
+        </div>
+      </div>
+    </UploadPanel>
+  </div>
+</ToolShell>

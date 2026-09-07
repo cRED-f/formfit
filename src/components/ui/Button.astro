@@ -1,0 +1,58 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+
+export type ButtonVariant = 'primary' | 'secondary' | 'dark' | 'ghost';
+export type ButtonSize = 'sm' | 'md' | 'lg';
+
+interface Props extends HTMLAttributes<'a' | 'button'> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  /** Render as a link when provided. */
+  href?: string;
+  icon?: IconName;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  icon,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-full font-medium transition active:scale-[0.97]';
+
+const variantClasses = {
+  primary: 'bg-primary text-on-primary hover:bg-primary-focus',
+  secondary: 'border border-primary text-primary hover:bg-primary/5',
+  dark: 'bg-ink text-white hover:bg-ink-muted-80',
+  ghost: 'bg-pearl text-ink-muted-80 border-[3px] border-divider-soft hover:text-ink',
+} as const;
+
+const sizeClasses = {
+  sm: 'px-4 py-[7px] text-[13px] leading-none',
+  md: 'px-[22px] py-[11px] text-[17px] leading-none',
+  lg: 'px-[28px] py-[14px] text-[18px] font-light leading-none',
+} as const;
+
+const classes = [base, variantClasses[variant], sizeClasses[size], className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...rest}>
+      <slot />
+      {icon && <Icon name={icon} size={18} />}
+    </a>
+  ) : (
+    <button type="button" class={classes} {...rest}>
+      <slot />
+      {icon && <Icon name={icon} size={18} />}
+    </button>
+  )
+}

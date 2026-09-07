@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+/*
+ * FormFit design system — tokens derived from DESIGN.md (Apple-style).
+ * Single accent blue, near-black ink, parchment/white/near-black tiles,
+ * SF Pro-like system font stack, Apple pill radii, one product shadow.
+ */
+
+@theme {
+  /* ---- Color: brand & accent ---- */
+  --color-primary: #0066cc;
+  --color-primary-focus: #0071e3;
+  --color-primary-on-dark: #2997ff;
+
+  /* ---- Color: ink & text ---- */
+  --color-ink: #1d1d1f;
+  --color-ink-muted-80: #333333;
+  --color-ink-muted-48: #7a7a7a;
+  --color-body-muted: #cccccc;
+
+  /* ---- Color: surfaces ---- */
+  --color-canvas: #ffffff;
+  --color-parchment: #f5f5f7;
+  --color-pearl: #fafafc;
+  --color-tile-1: #272729;
+  --color-tile-2: #2a2a2c;
+  --color-tile-3: #252527;
+  --color-chip: #d2d2d7;
+  --color-on-primary: #ffffff;
+
+  /* ---- Color: hairlines ---- */
+  --color-divider-soft: #f0f0f0;
+  --color-hairline: #e0e0e0;
+
+  /* ---- Fonts ---- */
+  --font-sans:
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* ---- Type scale (size + line-height) ---- */
+  --text-hero: 3.5rem 1.07;
+  --text-display-lg: 2.5rem 1.1;
+  --text-display-md: 2.125rem 1.47;
+  --text-lead: 1.75rem 1.14;
+  --text-lead-airy: 1.5rem 1.5;
+  --text-tagline: 1.3125rem 1.19;
+  --text-body: 1.0625rem 1.47;
+  --text-caption: 0.875rem 1.43;
+  --text-caption-strong: 0.875rem 1.29;
+  --text-fine-print: 0.75rem 1;
+  --text-micro: 0.625rem 1.3;
+  --text-nav: 0.75rem 1;
+
+  /* ---- Radii ---- */
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 11px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  /* ---- The single product shadow (product imagery only) ---- */
+  --shadow-product: 0 3px 30px rgba(0, 0, 0, 0.22);
+
+  /* ---- Breakpoints ---- */
+  --breakpoint-nav: 834px;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-canvas);
+    line-height: 1.47;
+  }
+
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Micro-animations (Apple-quiet: gentle, one at a time, no jank)      */
+/* Plain classes — always shipped, used by the upload zone + tiles.    */
+/* ------------------------------------------------------------------ */
+
+@keyframes ff-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes ff-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+@keyframes ff-pop {
+  from {
+    transform: scale(0.94) translateY(4px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes ff-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ff-rise {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes ff-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* The one product shadow, reserved for the preview image resting on the surface. */
+.ff-pop {
+  animation: ff-pop 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ff-rise {
+  animation: ff-rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.ff-fade {
+  animation: ff-fade 0.3s ease-out both;
+}
+
+.ff-float-slow {
+  animation: ff-float 3.2s ease-in-out infinite;
+}
+
+/* Shimmer sweep used on the drag-over / loading hint line. */
+.ff-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    rgba(29, 29, 31, 0) 0%,
+    rgba(29, 29, 31, 0.12) 50%,
+    rgba(29, 29, 31, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: ff-shimmer 1.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ff-pop,
+  .ff-rise,
+  .ff-fade,
+  .ff-float-slow,
+  .ff-shimmer {
+    animation: none;
+  }
+}

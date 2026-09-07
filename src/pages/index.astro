@@ -1,11 +1,425 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Icon, { type IconName } from '../components/ui/Icon.astro';
+import IconTile from '../components/ui/IconTile.astro';
+import HeroUpload from '../components/tool/HeroUpload.astro';
+import UploadPanel from '../components/tool/UploadPanel.astro';
+import Input from '../components/ui/Input.astro';
+import Select from '../components/ui/Select.astro';
+import Button from '../components/ui/Button.astro';
+import FAQList, { type Faq } from '../components/seo/FAQList.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const tools: { id: string; icon: IconName; title: string; description: string }[] = [
+  { id: 'resize', icon: 'resize', title: 'Resize Image', description: 'Set exact pixel dimensions.' },
+  { id: 'compress', icon: 'compress', title: 'Compress Image', description: 'Shrink to a target file size.' },
+  { id: 'signature', icon: 'signature', title: 'Signature Resizer', description: 'Crop and resize signatures for forms.' },
+  { id: 'convert', icon: 'convert', title: 'Image Converter', description: 'Convert between JPG, PNG, and WebP.' },
+];
+
+const useCases = [
+  'Job applications',
+  'University applications',
+  'Government forms',
+  'Examination registrations',
+  'Scholarship applications',
+  'Visa & passport photos',
+  'Profile pictures',
+  'Online portals & document uploads',
+];
+
+const faq: Faq[] = [
+  {
+    q: 'What is FormFit?',
+    a: 'FormFit is a collection of free browser-based tools that resize, compress, convert, and prepare images and signatures so they pass online form requirements — things like "under 50 KB", "300 × 300 px", or "JPG only".',
+  },
+  {
+    q: 'Do I need to create an account?',
+    a: 'No. There is no login and no signup. Open a tool, upload your image, and download the result — that\'s it.',
+  },
+  {
+    q: 'Are my images uploaded to a server?',
+    a: 'No. Everything happens inside your browser using your device\'s own processing power. Your files never leave your computer or phone.',
+  },
+  {
+    q: 'Is FormFit free?',
+    a: 'Yes. Every tool on FormFit is free to use, with no limits or hidden charges.',
+  },
+  {
+    q: 'Which image formats are supported?',
+    a: 'JPG, PNG, and WebP are supported across all FormFit tools, with more formats planned.',
+  },
+  {
+    q: 'Which tools are available?',
+    a: 'Today FormFit offers the Image Resizer, Compress, Signature Resizer, and Image Converter. More tools are on the way.',
+  },
+];
+
+const guides = [
+  { href: '/guides/reduce-image-file-size/', title: 'How to reduce image file size', description: 'Three ways to shrink an image for any size limit.' },
+  { href: '/guides/image-size-vs-dimensions/', title: 'Image size vs. dimensions', description: 'Why "50 KB" and "300 × 300 px" mean different things.' },
+  { href: '/guides/prepare-photo-for-online-form/', title: 'Prepare a photo for an online form', description: 'A quick walkthrough before you hit submit.' },
+];
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'FormFit',
+  url: 'https://formfit.com',
+  description:
+    'Free browser-based tools to resize, compress, convert, and prepare images and signatures for online forms — all inside your browser.',
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="FormFit — Make Any Image Upload-Ready"
+  description="Free online tools to resize, compress, convert, and prepare images and signatures for forms. 100% in your browser — nothing is ever uploaded."
+  path="/"
+>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="bg-canvas">
+    <Container>
+      <div class="py-20 text-center sm:py-28">
+        <h1 class="mx-auto max-w-4xl text-[2.125rem] font-semibold tracking-[-0.374px] sm:text-4xl lg:text-hero lg:tracking-[-0.28px]">
+          Make any image upload-ready
+        </h1>
+        <p class="mx-auto mt-6 max-w-xl text-lead text-ink-muted-80">
+          Resize, compress, and convert images for any online form — right in your browser.
+        </p>
+
+        <!-- Default hero upload (demo gif) -->
+        <div data-hero-upload class="mt-10">
+          <HeroUpload />
+        </div>
+
+        <!-- Inline tool panels (hidden until a card is clicked) -->
+        <div data-hero-tools class="mx-auto mt-10 hidden max-w-2xl text-left">
+          <!-- Resize -->
+          <div data-panel="resize" class="hidden">
+            <UploadPanel>
+              <div slot="controls">
+                <div class="grid gap-5 sm:grid-cols-2">
+                  <Input id="home-resize-width" label="Width" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
+                  <Input id="home-resize-height" label="Height" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
+                </div>
+                <div class="mt-5 flex flex-wrap items-end gap-x-8 gap-y-5">
+                  <label class="inline-flex cursor-pointer select-none items-center gap-2 text-[15px] text-ink">
+                    <input type="checkbox" checked class="h-4 w-4 accent-primary" />
+                    Maintain aspect ratio
+                  </label>
+                  <div class="w-full sm:w-64">
+                    <Select
+                      id="home-resize-format"
+                      label="Output format"
+                      options={[
+                        { value: 'jpeg', label: 'JPG' },
+                        { value: 'png', label: 'PNG' },
+                        { value: 'webp', label: 'WebP' },
+                      ]}
+                    />
+                  </div>
+                </div>
+                <div class="mt-6">
+                  <Button size="lg">Resize Image</Button>
+                </div>
+              </div>
+            </UploadPanel>
+          </div>
+
+          <!-- Compress -->
+          <div data-panel="compress" class="hidden">
+            <UploadPanel>
+              <div slot="controls">
+                <div class="grid gap-5 sm:grid-cols-2">
+                  <Input id="home-compress-target" label="Target file size" type="number" inputmode="numeric" min="1" max="1000" defaultValue="50" unit="KB" />
+                  <Select
+                    id="home-compress-format"
+                    label="Output format"
+                    options={[
+                      { value: 'jpeg', label: 'JPG' },
+                      { value: 'webp', label: 'WebP' },
+                    ]}
+                  />
+                </div>
+                <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+                  Image still too big after compressing? We'll suggest safely reducing its dimensions, rather than silently ruining the quality.
+                </p>
+                <div class="mt-6">
+                  <Button size="lg" icon="compress">Compress Image</Button>
+                </div>
+              </div>
+            </UploadPanel>
+          </div>
+
+          <!-- Signature -->
+          <div data-panel="signature" class="hidden">
+            <UploadPanel>
+              <div slot="controls">
+                <div class="grid gap-5 sm:grid-cols-3">
+                  <Input id="home-sig-width" label="Width" type="number" inputmode="numeric" min="1" defaultValue="300" unit="px" />
+                  <Input id="home-sig-height" label="Height" type="number" inputmode="numeric" min="1" defaultValue="80" unit="px" />
+                  <Input id="home-sig-kb" label="Maximum size" type="number" inputmode="numeric" min="1" defaultValue="20" unit="KB" />
+                </div>
+                <div class="mt-5 w-full sm:w-72">
+                  <Select
+                    id="home-sig-background"
+                    label="Background"
+                    options={[
+                      { value: 'original', label: 'Original' },
+                      { value: 'white', label: 'White' },
+                      { value: 'transparent', label: 'Transparent' },
+                    ]}
+                  />
+                </div>
+                <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+                  We automatically crop empty space around the signature, keep its proportions, and center it in the frame.
+                </p>
+                <div class="mt-6">
+                  <Button size="lg" icon="signature">Prepare Signature</Button>
+                </div>
+              </div>
+            </UploadPanel>
+          </div>
+
+          <!-- Convert -->
+          <div data-panel="convert" class="hidden">
+            <UploadPanel>
+              <div slot="controls">
+                <div class="grid gap-5 sm:grid-cols-2">
+                  <Select
+                    id="home-conv-format"
+                    label="Convert to"
+                    options={[
+                      { value: 'jpeg', label: 'JPG' },
+                      { value: 'png', label: 'PNG' },
+                      { value: 'webp', label: 'WebP' },
+                    ]}
+                  />
+                  <Select
+                    id="home-conv-quality"
+                    label="Quality"
+                    options={[
+                      { value: 'high', label: 'High — larger file' },
+                      { value: 'balanced', label: 'Balanced' },
+                      { value: 'small', label: 'Small — smaller file' },
+                    ]}
+                  />
+                </div>
+                <div class="mt-6">
+                  <Button size="lg" icon="convert">Convert Image</Button>
+                </div>
+              </div>
+            </UploadPanel>
+          </div>
+
+          <button type="button" data-back class="mt-6 text-caption font-medium text-ink-muted-48 transition hover:text-ink">
+            ← Back to all tools
+          </button>
+        </div>
+
+        <p class="mt-8 flex items-center justify-center gap-2 text-caption text-ink-muted-48">
+          <Icon name="lock" size={15} />
+          Your images never leave your device.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Popular tools -->
+  <section id="tools" class="bg-parchment">
+    <Container>
+      <div class="py-20">
+        <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">Popular tools</h2>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {tools.map((tool) => (
+            <button
+              type="button"
+              data-tool={tool.id}
+              class="group rounded-lg border border-hairline bg-canvas p-7 text-left transition-colors hover:bg-pearl data-[active]:border-primary data-[active]:bg-pearl"
+            >
+              <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-parchment text-primary">
+                <Icon name={tool.icon} size={22} />
+              </div>
+              <h3 class="mt-5 text-body font-semibold">{tool.title}</h3>
+              <p class="mt-1.5 text-caption text-ink-muted-48">{tool.description}</p>
+              <span class="mt-4 inline-flex items-center gap-1 text-caption font-semibold text-primary">
+                Use now
+                <Icon name="arrowRight" size={14} class="transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Why FormFit -->
+  <section class="bg-canvas">
+    <Container width="standard">
+      <div class="py-20">
+        <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">Why FormFit</h2>
+        <div class="mt-12 grid gap-10 md:grid-cols-3">
+          <div class="text-center">
+            <div class="mx-auto inline-flex">
+              <IconTile name="lock" size="md" />
+            </div>
+            <h3 class="mt-6 text-tagline font-semibold">Private by design</h3>
+            <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
+              Everything runs on your device — no server, no uploads, no leaks.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto inline-flex">
+              <IconTile name="bolt" size="md" />
+            </div>
+            <h3 class="mt-6 text-tagline font-semibold">Instantly fast</h3>
+            <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
+              No upload, no waiting — results appear the moment your image is ready.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto inline-flex">
+              <IconTile name="user" size="md" />
+            </div>
+            <h3 class="mt-6 text-tagline font-semibold">No account needed</h3>
+            <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
+              Open, upload, download. No login, no signup.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- How it works (dark tile) -->
+  <section class="bg-tile-1 text-white">
+    <Container width="standard">
+      <div class="py-20">
+        <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">How it works</h2>
+        <div class="mt-12 grid gap-8 sm:grid-cols-3">
+          {[
+            ['Upload', 'Choose an image and enter your form\'s requirement.'],
+            ['FormFit prepares it', 'Crop, resize, convert, and compress — all in-browser.'],
+            ['Download', 'Save the result, matching your form\'s rules.'],
+          ].map(([title, body], index) => (
+            <div class="text-center">
+              <span class="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-[17px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-[14px]">
+                {index + 1}
+              </span>
+              <h3 class="mt-6 text-tagline font-semibold">{title}</h3>
+              <p class="mx-auto mt-2 max-w-xs text-body text-body-muted">{body}</p>
+            </div>
+          ))}
+        </div>
+        <p class="mt-12 flex items-center justify-center gap-2 text-caption text-body-muted">
+          <Icon name="shield" size={16} class="text-primary-on-dark" />
+          No uploads. Your files stay on your device — always.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Use cases -->
+  <section class="bg-parchment">
+    <Container width="standard">
+      <div class="py-20 text-center">
+        <h2 class="text-display-md font-semibold tracking-[-0.374px]">Built for real uploads</h2>
+        <p class="mx-auto mt-4 max-w-xl text-body text-ink-muted-80">
+          When a form rejects your image — too large, wrong size, wrong format — FormFit fixes it in seconds.
+        </p>
+        <ul class="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-2.5">
+          {useCases.map((item) => (
+            <li class="rounded-full border border-hairline bg-canvas px-4 py-2 text-caption text-ink-muted-80">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-canvas">
+    <Container width="standard">
+      <div class="py-20 text-center">
+        <h2 class="text-display-md font-semibold tracking-[-0.374px]">Frequently asked questions</h2>
+        <div class="mt-10">
+          <FAQList items={faq} />
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Guides -->
+  <section class="bg-parchment">
+    <Container width="standard">
+      <div class="py-20">
+        <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">Guides</h2>
+        <div class="mt-12 grid gap-6 md:grid-cols-3">
+          {guides.map((guide) => (
+            <a
+              href={guide.href}
+              class="group rounded-xl border border-hairline bg-canvas p-7 transition-colors hover:-translate-y-0.5 hover:border-[#d2d2d7] hover:bg-pearl"
+            >
+              <IconTile name="fileImage" size="sm" />
+              <h3 class="mt-5 text-body font-semibold">{guide.title}</h3>
+              <p class="mt-1.5 text-caption text-ink-muted-48">{guide.description}</p>
+              <span class="mt-4 inline-flex items-center gap-1 text-caption font-semibold text-primary">
+                Read
+                <Icon name="arrowRight" size={14} class="transition-transform group-hover:translate-x-0.5" />
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <script>
+    const heroUpload = document.querySelector<HTMLElement>('[data-hero-upload]');
+    const heroTools = document.querySelector<HTMLElement>('[data-hero-tools]');
+    const backBtn = heroTools?.querySelector<HTMLButtonElement>('[data-back]');
+
+    document.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.tool!;
+        const target = heroTools?.querySelector<HTMLElement>(`[data-panel="${id}"]`);
+
+        // Toggle active card
+        document.querySelectorAll('[data-tool]').forEach((b) => b.removeAttribute('data-active'));
+        btn.setAttribute('data-active', '');
+
+        // Hide hero upload, show tool panels
+        heroUpload?.classList.add('hidden');
+        heroTools?.classList.remove('hidden');
+        heroTools?.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => p.classList.add('hidden'));
+        target?.classList.remove('hidden');
+
+        // Scroll to top of hero
+        heroTools?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    backBtn?.addEventListener('click', () => {
+      // Show hero upload, hide tool panels
+      heroUpload?.classList.remove('hidden');
+      heroTools?.classList.add('hidden');
+      document.querySelectorAll('[data-tool]').forEach((b) => b.removeAttribute('data-active'));
+    });
+  </script>
 </Layout>

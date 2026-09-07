@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+import Button from '../components/ui/Button.astro';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'About' }];
+---
+
+<Layout
+  title="About FormFit — Free Browser-Based Image Tools | FormFit"
+  description="FormFit makes any image upload-ready with free, private, browser-based tools. Learn what we do, why we built it, and why nothing is ever uploaded."
+  path="/about/"
+>
+  <Container width="narrow">
+    <div class="py-16">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-7 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">About FormFit</h1>
+      <p class="mt-5 text-lead text-ink-muted-80">
+        FormFit is a collection of free, focused tools that prepare images for online forms — so
+        that "upload failed" becomes "ready to submit".
+      </p>
+
+      <div class="mt-12 space-y-12">
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">What we do</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Online applications are full of image requirements: under 50 KB, exactly 300 × 300
+            pixels, JPG only, signature under 20 KB. FormFit turns each one into a simple tool —
+            you enter the requirement, upload an image, and download the result.
+          </p>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Today that means an Image Resizer, an exact file-size Compressor, a Signature Resizer,
+            and an Image Converter. More tools are planned, each solving one real upload problem.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Why everything runs in your browser</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Your photos, scans, and signatures are private. FormFit's processing runs entirely on
+            your device: the file is read, changed, and downloaded right there. We do not upload,
+            store, or analyse your images — there is no server in the path.
+          </p>
+          <p class="mt-4 text-body text-ink-muted-80">
+            There is also nothing to install and nothing to wait for. A tool loads instantly, and
+            the result appears as soon as your device finishes the work — no round trip across the
+            internet.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">No accounts. No subscriptions.</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Using FormFit should be as simple as using a ruler. There is no account, no login, and
+            no subscription — open a tool, prepare your image, and leave.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Who it's for</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Job seekers, students, applicants, and anyone facing a stubborn upload box. If you can
+            describe what the form wants, you do not need to know anything about pixels, file sizes,
+            or formats to use FormFit.
+          </p>
+        </section>
+
+        <div>
+          <Button href="/compress-image/" size="lg">
+            Try the Compressor
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Layout>

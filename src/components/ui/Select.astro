@@ -1,0 +1,48 @@
+---
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  label: string;
+  options: Option[];
+  hint?: string;
+  disabled?: boolean;
+}
+
+const { id, label, options, hint, disabled = false } = Astro.props;
+---
+
+<div>
+  <label for={id} class="mb-1.5 block text-caption font-medium text-ink">
+    {label}
+  </label>
+  <div class="relative">
+    <select
+      id={id}
+      disabled={disabled}
+      class="h-11 w-full appearance-none rounded-md border border-hairline bg-canvas px-3 pr-10 text-[15px] text-ink transition focus:border-primary focus:outline-none disabled:cursor-not-allowed disabled:bg-parchment disabled:text-ink-muted-48"
+    >
+      {options.map((opt) => (
+        <option value={opt.value}>{opt.label}</option>
+      ))}
+    </select>
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="pointer-events-none absolute inset-y-0 right-3 my-auto text-ink-muted-48"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </div>
+  {hint && <p class="mt-1.5 text-fine-print text-ink-muted-48">{hint}</p>}
+</div>

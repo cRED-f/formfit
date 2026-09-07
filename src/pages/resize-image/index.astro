@@ -1,0 +1,91 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'Will resizing damage my image quality?',
+    a: 'Resizing changes the pixel dimensions of your image. Shrinking a large photo keeps it sharp, while enlarging a small image can look soft because extra pixels have to be invented. FormFit shows the original and the result side by side so you can check quality before downloading.',
+  },
+  {
+    q: 'What output formats can I choose?',
+    a: 'JPG for photos, PNG for images that need transparency, or WebP — a modern format with excellent compression for web uploads. All three are supported.',
+  },
+  {
+    q: 'Do I need to keep the aspect ratio?',
+    a: 'No. You can set an exact width and height, or lock the aspect ratio so typing one value automatically updates the other and the photo is never stretched.',
+  },
+  {
+    q: 'Is my image uploaded anywhere?',
+    a: 'No. FormFit resizes images entirely inside your browser. Your photo never leaves your device.',
+  },
+];
+
+const howTo = [
+  'Upload the image you want to resize.',
+  'Enter the width and height in pixels — or lock the aspect ratio and enter just one.',
+  'Choose the output format: JPG, PNG, or WebP.',
+  'Resize, compare before and after, then download.',
+];
+
+const examples = [
+  '1920 × 1080 photo → 300 × 300 profile picture',
+  'Fit a large photo into a 1024 × 768 upload box',
+  'Reduce an 800 KB photo to a neat 640 × 480 file',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Compress Image', href: '/compress-image/', description: 'Reduce an image to a target file size.', icon: 'compress' },
+  { title: 'Signature Resizer', href: '/signature-resizer/', description: 'Prepare a signature for online forms.', icon: 'signature' },
+  { title: 'Image Converter', href: '/image-converter/', description: 'Convert JPG, PNG, and WebP.', icon: 'convert' },
+];
+---
+
+<ToolShell
+  title="Resize Image Online — Change Image Dimensions | FormFit"
+  description="Resize an image to exact pixel dimensions — width, height, or both — and download it as JPG, PNG, or WebP. Free, private, and runs entirely in your browser."
+  path="/resize-image/"
+  heading="Resize Image"
+  intro="Change an image to an exact pixel size — like 300 × 300 or 1024 × 768. Set the width and height you need, lock the aspect ratio or turn it off, and download the result."
+  toolName="Image Resizer"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input id="resize-width" label="Width" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
+          <Input id="resize-height" label="Height" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
+        </div>
+
+        <div class="mt-5 flex flex-wrap items-end gap-x-8 gap-y-5">
+          <label class="inline-flex cursor-pointer select-none items-center gap-2 text-[15px] text-ink">
+            <input type="checkbox" checked class="h-4 w-4 accent-primary" />
+            Maintain aspect ratio
+          </label>
+          <div class="w-full sm:w-64">
+            <Select
+              id="resize-format"
+              label="Output format"
+              options={[
+                { value: 'jpeg', label: 'JPG' },
+                { value: 'png', label: 'PNG' },
+                { value: 'webp', label: 'WebP' },
+              ]}
+            />
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <Button size="lg">Resize Image</Button>
+        </div>
+      </div>
+    </UploadPanel>
+  </div>
+</ToolShell>

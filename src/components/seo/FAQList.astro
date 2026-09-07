@@ -1,0 +1,29 @@
+---
+export interface Faq {
+  q: string;
+  a: string;
+}
+
+interface Props {
+  items: Faq[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="mx-auto max-w-3xl space-y-3 text-left">
+  {items.map((item) => (
+    <details class="group rounded-lg border border-hairline bg-canvas px-5 py-4">
+      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-body font-medium text-ink">
+        {item.q}
+        <span
+          class="shrink-0 text-ink-muted-48 transition-transform duration-200 group-open:rotate-45"
+          aria-hidden="true"
+        >
+          +
+        </span>
+      </summary>
+      <p class="mt-3 text-body text-ink-muted-80">{item.a}</p>
+    </details>
+  ))}
+</div>

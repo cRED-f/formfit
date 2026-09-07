@@ -1,0 +1,96 @@
+---
+import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
+import UploadPanel from '../../components/tool/UploadPanel.astro';
+import Button from '../../components/ui/Button.astro';
+import Input from '../../components/ui/Input.astro';
+import Select from '../../components/ui/Select.astro';
+
+const faq = [
+  {
+    q: 'What does "compress to 50 KB" mean?',
+    a: 'You tell FormFit the maximum file size your form allows — say 50 KB — and FormFit produces the highest-quality version of your image that still fits under that limit. It works back from 100% quality, so you always get the best result that meets the requirement.',
+  },
+  {
+    q: 'Will compression ruin my image?',
+    a: 'No. FormFit compresses gradually and stops as soon as the file fits, preserving as much quality as possible. If an image is so big it cannot reach the target without shrinking, FormFit tells you clearly instead of silently destroying it.',
+  },
+  {
+    q: 'Is there a limit to how large a file I can upload?',
+    a: 'FormFit processes files up to about 25 MB in your browser. Larger images still work but may take a little longer on slower devices.',
+  },
+  {
+    q: 'Do you upload my images?',
+    a: 'Never. Compression happens entirely on your device. Your image is read, processed, and downloaded without ever being sent to a server.',
+  },
+];
+
+const howTo = [
+  'Upload the image you need to shrink.',
+  'Enter the maximum file size your form allows — FormFit fills in 50 KB for you.',
+  'Compress. FormFit finds the best quality that still fits.',
+  'Check the result, then download the file that now satisfies the requirement.',
+];
+
+const examples = [
+  '2.3 MB photo → under 100 KB',
+  '850 KB scan → under 50 KB',
+  '120 KB signature → under 20 KB',
+];
+
+const related: ToolRelated[] = [
+  { title: 'Resize Image', href: '/resize-image/', description: 'Change width and height exactly.', icon: 'resize' },
+  { title: 'Signature Resizer', href: '/signature-resizer/', description: 'Prepare a signature for online forms.', icon: 'signature' },
+  { title: 'Image Converter', href: '/image-converter/', description: 'Convert JPG, PNG, and WebP.', icon: 'convert' },
+];
+---
+
+<ToolShell
+  title="Compress Image to Exact KB Online | FormFit"
+  description="Compress an image to a target file size — under 50 KB, 100 KB, or any limit. Downloads the highest-quality version that still fits. 100% in your browser, nothing uploaded."
+  path="/compress-image/"
+  heading="Compress Image"
+  intro="Forms often reject images simply because they are too large. Tell FormFit the limit your form allows, and it will deliver the best-looking image that fits under it."
+  toolName="Exact File-Size Compressor"
+  howTo={howTo}
+  examples={examples}
+  faq={faq}
+  related={related}
+>
+  <div slot="tool">
+    <UploadPanel>
+      <div slot="controls">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Input
+            id="compress-target"
+            label="Target file size"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            max="1000"
+            defaultValue="50"
+            unit="KB"
+          />
+          <Select
+            id="compress-format"
+            label="Output format"
+            options={[
+              { value: 'jpeg', label: 'JPG' },
+              { value: 'webp', label: 'WebP' },
+            ]}
+          />
+        </div>
+
+        <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
+          Image still too big after compressing? We'll suggest safely reducing its dimensions, rather
+          than silently ruining the quality.
+        </p>
+
+        <div class="mt-6">
+          <Button size="lg" icon="compress">
+            Compress Image
+          </Button>
+        </div>
+      </div>
+    </UploadPanel>
+  </div>
+</ToolShell>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  /** Content width preset. */
+  width?: 'wide' | 'standard' | 'narrow';
+}
+
+const { width = 'wide' } = Astro.props;
+
+const widthClasses: Record<string, string> = {
+  wide: 'max-w-[1440px]',
+  standard: 'max-w-[1120px]',
+  narrow: 'max-w-[980px]',
+};
+---
+
+<div class:list={['mx-auto w-full px-6 sm:px-8', widthClasses[width]]}>
+  <slot />
+</div>

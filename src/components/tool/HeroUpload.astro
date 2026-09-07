@@ -1,0 +1,194 @@
+---
+import Icon from '../ui/Icon.astro';
+import IconTile from '../ui/IconTile.astro';
+---
+
+<div class="ff-rise mx-auto w-full max-w-2xl" data-formfit-hero-upload>
+  <div
+    data-zone
+    role="button"
+    tabindex="0"
+    aria-label="Upload an image — click, drop, or paste"
+    class="relative flex min-h-[340px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl border-[3px] border-dashed border-[#d2d2d7] bg-parchment px-8 py-14 text-center transition-colors duration-200 hover:border-primary/50 hover:bg-pearl sm:min-h-[380px] sm:px-12 sm:py-16"
+  >
+    <input type="file" accept="image/*" class="sr-only" data-file-input tabindex="-1" aria-hidden="true" />
+
+    <!-- Empty state -->
+    <div data-empty class="flex flex-col items-center gap-5">
+      <!-- Demo GIF — shows what FormFit can do -->
+      <img
+        src="/formfit_resize_compress_demo.gif"
+        alt="Demo: resizing and compressing an image with FormFit"
+        width="400"
+        height="225"
+        loading="lazy"
+        decoding="async"
+        class="ff-pop w-full max-w-lg rounded-xl border border-hairline object-contain shadow-product sm:max-w-xl sm:max-h-[280px]"
+      />
+
+      <p class="text-tagline font-semibold text-ink">Drop your image here</p>
+
+      <p class="inline-flex items-center gap-1.5 rounded-full bg-canvas/80 px-4 py-1.5 text-fine-print text-ink-muted-48 ring-1 ring-inset ring-hairline">
+        <Icon name="bolt" size={12} />
+        JPG, PNG, WebP · Up to 25 MB · Works offline
+      </p>
+    </div>
+
+    <!-- Loading state -->
+    <div data-loading class="flex flex-col items-center gap-4 text-primary">
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-opacity="0.12" stroke-width="5" />
+        <circle
+          data-ring
+          cx="32" cy="32" r="27"
+          fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+          pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"
+          transform="rotate(-90 32 32)"
+          style="transition: stroke-dashoffset 0.85s cubic-bezier(0.16, 1, 0.3, 1)"
+        />
+      </svg>
+      <p class="text-caption font-medium text-ink">Preparing your image…</p>
+    </div>
+
+    <!-- Preview state -->
+    <div data-preview class="w-full flex-col items-center gap-4">
+      <img
+        data-preview-img
+        alt="Your selected image"
+        class="ff-pop mx-auto max-h-[260px] max-w-full rounded-lg border border-hairline bg-canvas object-contain shadow-product sm:max-h-[300px]"
+      />
+      <div class="ff-rise mx-auto mt-4 flex max-w-md items-center justify-center gap-3 rounded-full border border-hairline bg-canvas px-4 py-2" style="animation-delay:60ms">
+        <Icon name="fileImage" size={16} class="shrink-0 text-ink-muted-48" />
+        <p class="min-w-0 flex-1 truncate text-caption font-medium text-ink" data-file-name>image.jpg</p>
+        <p class="shrink-0 text-fine-print text-ink-muted-48" data-file-meta>— × —</p>
+      </div>
+      <div class="ff-rise mt-3 flex items-center justify-center gap-5" style="animation-delay:120ms">
+        <a href="/resize-image/" class="text-caption font-medium text-primary transition hover:underline">Resize it →</a>
+        <a href="/compress-image/" class="text-caption font-medium text-primary transition hover:underline">Compress it →</a>
+        <button type="button" data-remove class="text-caption font-medium text-ink-muted-48 transition hover:text-ink">Remove</button>
+      </div>
+    </div>
+
+    <!-- Drag shimmer -->
+    <div data-drop-hint class="pointer-events-none absolute inset-x-0 bottom-0 hidden h-1 overflow-hidden">
+      <div class="ff-shimmer h-full w-full opacity-70" />
+    </div>
+  </div>
+</div>
+
+<style>
+  [data-zone] { transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; }
+  [data-zone]:hover { transform: translateY(-1px); }
+  [data-zone].is-dragging { border-color: var(--color-primary); background-color: var(--color-pearl); transform: scale(1.006); }
+  [data-zone][data-state='empty'] [data-empty] { display: flex; }
+  [data-zone][data-state='empty'] [data-loading], [data-zone][data-state='empty'] [data-preview] { display: none; }
+  [data-zone][data-state='loading'] [data-loading] { display: flex; }
+  [data-zone][data-state='loading'] [data-empty], [data-zone][data-state='loading'] [data-preview] { display: none; }
+  [data-zone][data-state='preview'] [data-preview] { display: flex; }
+  [data-zone][data-state='preview'] [data-empty], [data-zone][data-state='preview'] [data-loading] { display: none; }
+  [data-zone].is-dragging [data-drop-hint] { display: block; }
+  [data-zone]:focus-visible { outline: 2px solid var(--color-primary-focus); outline-offset: 3px; }
+
+  /* Demo strip crossfade — three capabilities cycle every 9s */
+  @keyframes demo-cycle {
+    0%, 28%   { opacity: 1; transform: translateY(0); }
+    33%, 61%  { opacity: 0; transform: translateY(-6px); }
+    66%, 94%  { opacity: 0; transform: translateY(6px); }
+    100%      { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes demo-cycle-2 {
+    0%, 28%   { opacity: 0; transform: translateY(6px); }
+    33%, 61%  { opacity: 1; transform: translateY(0); }
+    66%, 94%  { opacity: 0; transform: translateY(-6px); }
+    100%      { opacity: 0; transform: translateY(6px); }
+  }
+  @keyframes demo-cycle-3 {
+    0%, 28%   { opacity: 0; transform: translateY(-6px); }
+    33%, 61%  { opacity: 0; transform: translateY(6px); }
+    66%, 94%  { opacity: 1; transform: translateY(0); }
+    100%      { opacity: 0; transform: translateY(-6px); }
+  }
+  .demo-cap:nth-child(1) { animation: demo-cycle 9s ease-in-out infinite; }
+  .demo-cap:nth-child(2) { animation: demo-cycle-2 9s ease-in-out infinite; }
+  .demo-cap:nth-child(3) { animation: demo-cycle-3 9s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-cap { animation: none; opacity: 1; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-formfit-hero-upload]').forEach((root) => {
+    const zone = root.querySelector<HTMLElement>('[data-zone]')!;
+    const input = root.querySelector<HTMLInputElement>('[data-file-input]')!;
+    const ring = root.querySelector<SVGCircleElement>('[data-ring]')!;
+    const img = root.querySelector<HTMLImageElement>('[data-preview-img]')!;
+    const nameEl = root.querySelector<HTMLElement>('[data-file-name]')!;
+    const metaEl = root.querySelector<HTMLElement>('[data-file-meta]')!;
+    const removeBtn = root.querySelector<HTMLButtonElement>('[data-remove]')!;
+
+    zone.dataset.state = 'empty';
+    let objectUrl: string | null = null;
+    let busy = false;
+
+    function formatSize(b: number) {
+      if (b < 1024) return `${b} B`;
+      if (b < 1048576) return `${Math.round(b / 1024)} KB`;
+      return `${(b / 1048576).toFixed(1)} MB`;
+    }
+
+    async function handleFile(file: File) {
+      if (!file?.type.startsWith('image/') || busy) return;
+      busy = true;
+      zone.dataset.state = 'loading';
+      ring.style.strokeDashoffset = '100';
+      void ring.getBoundingClientRect();
+      requestAnimationFrame(() => requestAnimationFrame(() => { ring.style.strokeDashoffset = '0'; }));
+
+      try {
+        const image = new Image();
+        const url = URL.createObjectURL(file);
+        image.src = url;
+        await image.decode();
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        objectUrl = url;
+        img.classList.remove('ff-pop');
+        void img.getBoundingClientRect();
+        img.classList.add('ff-pop');
+        img.src = url;
+        nameEl.textContent = file.name;
+        metaEl.textContent = `${image.naturalWidth} × ${image.naturalHeight} · ${formatSize(file.size)}`;
+        zone.dataset.state = 'preview';
+        root.dispatchEvent(new CustomEvent('formfit:file-ready', { detail: { file, objectUrl: url, width: image.naturalWidth, height: image.naturalHeight } }));
+      } catch {
+        zone.dataset.state = 'empty';
+      } finally {
+        busy = false;
+      }
+    }
+
+    zone.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('[data-remove]')) return;
+      if (!busy) input.click();
+    });
+    zone.addEventListener('keydown', (e) => {
+      if ((e.key === 'Enter' || e.key === ' ') && !busy) { e.preventDefault(); input.click(); }
+    });
+    input.addEventListener('change', () => { const f = input.files?.[0]; if (f) void handleFile(f); input.value = ''; });
+
+    removeBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+      img.removeAttribute('src');
+      input.value = '';
+      zone.dataset.state = 'empty';
+    });
+
+    let dragDepth = 0;
+    zone.addEventListener('dragenter', (e) => { e.preventDefault(); dragDepth++; zone.classList.add('is-dragging'); });
+    zone.addEventListener('dragover', (e) => e.preventDefault());
+    zone.addEventListener('dragleave', () => { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) zone.classList.remove('is-dragging'); });
+    zone.addEventListener('drop', (e) => { e.preventDefault(); dragDepth = 0; zone.classList.remove('is-dragging'); const f = e.dataTransfer?.files?.[0]; if (f) void handleFile(f); });
+    root.addEventListener('paste', (e) => { const f = e.clipboardData?.files?.[0]; if (f) void handleFile(f); });
+  });
+</script>

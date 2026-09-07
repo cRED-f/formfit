@@ -1,0 +1,52 @@
+---
+export interface Props {
+  /** Full document title, e.g. "Resize Image Online — Change Image Dimensions | FormFit". */
+  title: string;
+  description: string;
+  /** Canonical path starting with "/" (a full absolute URL is also accepted). Default "/". */
+  path?: string;
+  type?: 'website' | 'article';
+  image?: { url: string; alt: string };
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  path = '/',
+  type = 'website',
+  image,
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://formfit.com');
+const canonical = path.startsWith('http') ? path : new URL(path, site).toString();
+const ogType = type === 'article' ? 'article' : 'website';
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:site_name" content="FormFit" />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+
+{
+  image && (
+    <>
+      <meta property="og:image" content={new URL(image.url, site).toString()} />
+      <meta property="og:image:alt" content={image.alt} />
+      <meta name="twitter:card" content="summary_large_image" />
+    </>
+  )
+}
+{!image && <meta name="twitter:card" content="summary" />}
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+{noindex && <meta name="robots" content="noindex,nofollow" />}
+
+<slot />

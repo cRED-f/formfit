@@ -1,0 +1,312 @@
+---
+import Icon from '../ui/Icon.astro';
+import IconTile from '../ui/IconTile.astro';
+
+/**
+ * Animated preview-box upload zone.
+ *
+ * The whole panel is the upload target — click it, drag & drop onto it,
+ * or paste an image anywhere on it; there is no "Choose Image" button.
+ *
+ * 1. Empty: floating glassy icon + pulsing ring, hint pill, shimmer strip
+ *    that wakes up on drag-over.
+ * 2. On select: a short animated ring fills while the image decodes.
+ * 3. Preview: the image pops in (product shadow) with a file chip
+ *    (name · dimensions · size) and Replace / Remove controls.
+ *
+ * Emits `formfit:file-ready` ({ file, objectUrl, width, height }) so the
+ * per-tool image engine (Stage 4) can pick it up. Nothing leaves the device.
+ */
+interface Props {
+  /** Human-readable formats accepted, e.g. "JPG, PNG, WebP". */
+  formats?: string;
+  /** Size hint shown next to formats, e.g. "Up to 25 MB". */
+  sizeHint?: string;
+}
+
+const { formats = 'JPG, PNG, WebP', sizeHint = 'Up to 25 MB' } = Astro.props;
+---
+
+<div class="rounded-lg bg-canvas" data-formfit-upload>
+  <!-- Preview box / drop zone -->
+  <div
+    data-zone
+    role="button"
+    tabindex="0"
+    aria-label="Upload an image — click, drop, or paste"
+    class="relative flex min-h-[300px] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-[3px] border-dashed border-[#d2d2d7] bg-parchment px-6 py-12 text-center transition-colors duration-200 hover:border-primary/50 hover:bg-pearl sm:min-h-[340px]"
+  >
+    <input
+      type="file"
+      accept="image/*"
+      class="sr-only"
+      data-file-input
+      tabindex="-1"
+      aria-hidden="true"
+    />
+
+    <!-- ── Empty state ─────────────────────────────────────────── -->
+    <div data-empty class="flex flex-col items-center">
+      <IconTile name="image" size="lg" pulse class="ff-float-slow" />
+      <p class="mt-6 text-tagline font-semibold text-ink">Drop your image here</p>
+      <p class="mt-6 inline-flex items-center gap-1.5 rounded-full bg-canvas/80 px-4 py-1.5 text-fine-print text-ink-muted-48 ring-1 ring-inset ring-hairline">
+        <Icon name="bolt" size={12} />
+        {formats} · {sizeHint} · Works offline
+      </p>
+    </div>
+
+    <!-- ── Loading state (decode moment) ───────────────────────── -->
+    <div data-loading class="flex flex-col items-center text-primary">
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-opacity="0.12" stroke-width="5" />
+        <circle
+          data-ring
+          cx="32"
+          cy="32"
+          r="27"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="5"
+          stroke-linecap="round"
+          pathLength="100"
+          stroke-dasharray="100"
+          stroke-dashoffset="100"
+          transform="rotate(-90 32 32)"
+          style="transition: stroke-dashoffset 0.85s cubic-bezier(0.16, 1, 0.3, 1)"
+        />
+      </svg>
+      <p class="mt-4 text-caption font-medium text-ink">Preparing your image…</p>
+    </div>
+
+    <!-- ── Preview state ───────────────────────────────────────── -->
+    <div data-preview class="w-full flex-col items-center">
+      <img
+        data-preview-img
+        alt="Your selected image"
+        class="ff-pop mx-auto max-h-[300px] max-w-full rounded-lg border border-hairline bg-canvas object-contain shadow-product sm:max-h-[340px]"
+      />
+      <div
+        class="ff-rise mx-auto mt-5 flex max-w-md items-center justify-center gap-3 rounded-full border border-hairline bg-canvas px-4 py-2.5"
+        style="animation-delay: 60ms"
+      >
+        <Icon name="fileImage" size={16} class="shrink-0 text-ink-muted-48" />
+        <p class="min-w-0 flex-1 truncate text-caption font-medium text-ink" data-file-name>image.jpg</p>
+        <p class="shrink-0 text-fine-print text-ink-muted-48" data-file-meta>— × —</p>
+      </div>
+      <div class="ff-rise mt-3 flex items-center justify-center gap-5" style="animation-delay: 120ms">
+        <button type="button" data-replace class="text-caption font-medium text-primary transition hover:underline">
+          Replace image
+        </button>
+        <button type="button" data-remove class="text-caption font-medium text-ink-muted-48 transition hover:text-ink">
+          Remove
+        </button>
+      </div>
+    </div>
+
+    <!-- Drag-over shimmer strip -->
+    <div data-drop-hint class="pointer-events-none absolute inset-x-0 bottom-0 hidden h-1 overflow-hidden">
+      <div class="ff-shimmer h-full w-full opacity-70" />
+    </div>
+  </div>
+
+  <!-- Per-tool controls -->
+  <div class="mt-6" data-controls>
+    <slot name="controls" />
+  </div>
+
+  <!-- Result area -->
+  <div class="mt-6">
+    <slot name="result" />
+  </div>
+
+  <!-- Privacy guarantee -->
+  <p class="mt-6 flex items-center justify-center gap-2 text-fine-print text-ink-muted-48">
+    <Icon name="lock" size={14} />
+    Your image is processed on your device and never uploaded to our servers.
+  </p>
+</div>
+
+<style>
+  /* State machine — the box shows exactly one of: empty / loading / preview. */
+  [data-zone] { transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease; }
+  [data-zone]:hover { transform: translateY(-1px); }
+  [data-zone].is-dragging {
+    border-color: var(--color-primary);
+    background-color: var(--color-pearl);
+    transform: scale(1.006);
+  }
+
+  [data-zone][data-state='empty'] [data-empty] { display: flex; }
+  [data-zone][data-state='empty'] [data-loading],
+  [data-zone][data-state='empty'] [data-preview] { display: none; }
+
+  [data-zone][data-state='loading'] [data-loading] { display: flex; }
+  [data-zone][data-state='loading'] [data-empty],
+  [data-zone][data-state='loading'] [data-preview] { display: none; }
+
+  [data-zone][data-state='preview'] [data-preview] { display: flex; }
+  [data-zone][data-state='preview'] [data-empty],
+  [data-zone][data-state='preview'] [data-loading] { display: none; }
+
+  [data-zone].is-dragging [data-drop-hint] { display: block; }
+
+  /* Keyboard focus: match the dashed box, not the global ring. */
+  [data-zone]:focus-visible {
+    outline: 2px solid var(--color-primary-focus);
+    outline-offset: 3px;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-formfit-upload]').forEach((root) => {
+    const zone = root.querySelector<HTMLElement>('[data-zone]');
+    const input = root.querySelector<HTMLInputElement>('[data-file-input]');
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const loading = root.querySelector<HTMLElement>('[data-loading]');
+    const preview = root.querySelector<HTMLElement>('[data-preview]');
+    const img = root.querySelector<HTMLImageElement>('[data-preview-img]');
+    const ring = root.querySelector<SVGCircleElement>('[data-ring]');
+    const nameEl = root.querySelector<HTMLElement>('[data-file-name]');
+    const metaEl = root.querySelector<HTMLElement>('[data-file-meta]');
+    const removeBtn = root.querySelector<HTMLButtonElement>('[data-remove]');
+    const replaceBtn = root.querySelector<HTMLButtonElement>('[data-replace]');
+
+    if (!zone || !input || !empty || !loading || !preview || !img || !ring || !nameEl || !metaEl) return;
+
+    zone.dataset.state = 'empty';
+
+    let objectUrl: string | null = null;
+    let busy = false;
+
+    function formatSize(bytes: number): string {
+      if (bytes < 1024) return `${bytes} B`;
+      if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    function show(state: 'empty' | 'loading' | 'preview') {
+      zone.dataset.state = state;
+    }
+
+    function openPicker() {
+      if (busy) return;
+      input.click();
+    }
+
+    async function handleFile(file: File) {
+      if (!file || !file.type.startsWith('image/') || busy) return;
+      busy = true;
+      show('loading');
+      ring.style.strokeDashoffset = '100';
+      // Restart the ring draw for repeated selections.
+      void ring.getBoundingClientRect();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          ring.style.strokeDashoffset = '0';
+        });
+      });
+
+      try {
+        const image = new Image();
+        const url = URL.createObjectURL(file);
+        image.src = url;
+        await image.decode();
+        const width = image.naturalWidth;
+        const height = image.naturalHeight;
+
+        if (objectUrl) URL.revokeObjectURL(objectUrl);
+        objectUrl = url;
+
+        if (img) {
+          img.classList.remove('ff-pop');
+          void img.getBoundingClientRect();
+          img.classList.add('ff-pop');
+          img.src = url;
+        }
+        nameEl.textContent = file.name;
+        metaEl.textContent = `${width} × ${height} · ${formatSize(file.size)}`;
+        show('preview');
+
+        // Hand the file to the per-tool image engine (Stage 4+).
+        root.dispatchEvent(
+          new CustomEvent('formfit:file-ready', {
+            detail: { file, objectUrl: url, width, height },
+          })
+        );
+      } catch {
+        if (objectUrl) {
+          URL.revokeObjectURL(objectUrl);
+          objectUrl = null;
+        }
+        show('empty');
+      } finally {
+        busy = false;
+      }
+    }
+
+    function reset() {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        objectUrl = null;
+      }
+      input.value = '';
+      img.removeAttribute('src');
+      show('empty');
+    }
+
+    // Click anywhere on the box (except the action buttons) opens the picker.
+    zone.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('[data-remove],[data-replace]')) return;
+      openPicker();
+    });
+
+    zone.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openPicker();
+      }
+    });
+
+    input.addEventListener('change', () => {
+      const file = input.files?.[0];
+      if (file) void handleFile(file);
+      input.value = '';
+    });
+
+    replaceBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openPicker();
+    });
+
+    removeBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      reset();
+    });
+
+    // Drag & drop.
+    let dragDepth = 0;
+    zone.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      dragDepth += 1;
+      zone.classList.add('is-dragging');
+    });
+    zone.addEventListener('dragover', (e) => e.preventDefault());
+    zone.addEventListener('dragleave', () => {
+      dragDepth = Math.max(0, dragDepth - 1);
+      if (dragDepth === 0) zone.classList.remove('is-dragging');
+    });
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragDepth = 0;
+      zone.classList.remove('is-dragging');
+      const file = e.dataTransfer?.files?.[0];
+      if (file) void handleFile(file);
+    });
+
+    // Paste an image anywhere on the panel.
+    root.addEventListener('paste', (e) => {
+      const file = e.clipboardData?.files?.[0];
+      if (file) void handleFile(file);
+    });
+  });
+</script>

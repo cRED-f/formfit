@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Privacy Policy' }];
+---
+
+<Layout
+  title="Privacy Policy | FormFit"
+  description="FormFit processes images entirely in your browser. Your images are never uploaded to our servers. Read the short version of our privacy policy."
+  path="/privacy/"
+>
+  <Container width="narrow">
+    <div class="py-16">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-7 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">Privacy Policy</h1>
+      <p class="mt-5 text-lead text-ink-muted-80">
+        The short version: your images never leave your device, and FormFit has no way to see them.
+      </p>
+
+      <div class="mt-12 space-y-12">
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">How processing works</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Every FormFit tool processes images inside your browser using your device's processing
+            power. When you choose a file, it is opened locally, changed locally, and downloaded
+            locally. The image is never transmitted to a FormFit server — because no image processing
+            server exists.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">What we collect</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit does not collect your images, and we ask for no personal information — no
+            account, no email, no name. We may collect aggregate, anonymised usage statistics (for
+            example, which tools are used and how often) to understand what people need and to keep
+            the site working. These statistics never include image contents.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Cookies</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit does not use tracking cookies. Where third-party services are introduced in the
+            future, this policy will be updated in advance to say clearly what they are and how to
+            opt out.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Contact</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Questions about privacy can be sent to hello@formfit.com.
+          </p>
+        </section>
+      </div>
+    </div>
+  </Container>
+</Layout>
