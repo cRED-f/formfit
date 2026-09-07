@@ -1,0 +1,67 @@
+---
+import Icon from '../ui/Icon.astro';
+/**
+ * Post-upload result card — fills UploadPanel's `result` slot.
+ *
+ * The card stays hidden until a tool's script calls `showResult()` (from
+ * src/lib/image/result.ts). It shows the processed preview, a meta chip
+ * (name · dimensions · size), an optional summary callout, a Download button,
+ * and a Clear button.
+ *
+ * All interactivity lives in the tool-page scripts; this component only
+ * renders the shell + data hooks.
+ */
+---
+<div data-result hidden class="mt-6 rounded-lg border border-hairline bg-canvas p-6">
+  <div class="flex items-center justify-between">
+    <p class="text-caption-strong uppercase tracking-wide text-ink-muted-48">Your result</p>
+    <button
+      type="button"
+      data-result-clear
+      class="inline-flex items-center gap-1.5 text-caption font-medium text-ink-muted-48 transition hover:text-ink"
+    >
+      <Icon name="trash" size={14} />
+      Clear
+    </button>
+  </div>
+
+  <div class="mt-4 flex justify-center">
+    <img
+      data-result-img
+      alt="Processed result"
+      class="max-h-[280px] max-w-full rounded-md border border-hairline bg-parchment object-contain"
+    />
+  </div>
+
+  <div class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+    <span
+      data-result-meta
+      class="inline-flex items-center gap-1.5 rounded-full bg-parchment px-4 py-1.5 text-fine-print text-ink-muted-48"
+    >
+      <Icon name="fileImage" size={13} />
+      <span data-result-meta-text>— × —</span>
+    </span>
+    <span
+      data-result-summary
+      hidden
+      class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-1.5 text-fine-print font-medium text-primary"
+    >
+      <Icon name="check" size={13} />
+      <span data-result-summary-text></span>
+    </span>
+  </div>
+
+  <p data-result-error hidden class="mt-4 text-center text-caption font-medium text-red-600"></p>
+
+  <div class="mt-5 flex justify-center">
+    <a
+      data-result-download
+      href="#"
+      download
+      class="inline-flex items-center gap-2 rounded-full bg-primary px-[22px] py-[11px] text-[15px] font-medium text-on-primary transition hover:bg-primary-focus active:scale-[0.97]"
+    >
+      <Icon name="download" size={16} />
+      Download <span data-result-ext class="uppercase">JPG</span>
+    </a>
+  </div>
+</div>

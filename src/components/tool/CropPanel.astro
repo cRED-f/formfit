@@ -1,0 +1,59 @@
+---
+/**
+ * CropPanel — interactive drag-handle crop overlay.
+ * Hidden until a file is loaded; shows the image with a draggable crop rectangle.
+ * crop.ts sets the frame's aspect-ratio to the source image and renders it inside.
+ */
+---
+
+<div data-crop-panel hidden>
+  <div class="mb-3 flex items-center justify-between">
+    <span class="text-[13px] font-medium uppercase tracking-wide text-ink-muted-48">Crop</span>
+    <button
+      data-crop-reset
+      type="button"
+      class="hidden rounded-lg bg-black/[0.05] px-3 py-1.5 text-[12px] font-medium text-ink-muted-48 transition hover:bg-black/[0.08]"
+    >
+      Reset
+    </button>
+  </div>
+
+  <div
+    data-crop-frame
+    class="relative w-full overflow-hidden rounded-xl border border-hairline bg-parchment"
+    style="aspect-ratio: 16 / 10;"
+  >
+    <!-- Source image fills the frame (aspect-ratio set to match). -->
+    <img data-crop-img class="block h-full w-full select-none" alt="Crop preview" draggable="false" />
+
+    <!-- Crop rectangle overlay. -->
+    <div
+      data-crop-rect
+      class="absolute inset-0 z-10 touch-none"
+      style="left:0;top:0;width:100%;height:100%;"
+    >
+      <!-- Dark scrim via box-shadow on the rect fill. -->
+      <div class="pointer-events-none absolute inset-0 border-2 border-white/80 shadow-[0_0_0_999px_rgba(0,0,0,0.45)]"></div>
+
+      <!-- Corner handles (16px touch targets, 6px visual). -->
+      <div data-handle="nw" class="absolute -left-[8px] -top-[8px] h-[16px] w-[16px] cursor-nw-resize touch-none rounded-full bg-white shadow-md"></div>
+      <div data-handle="ne" class="absolute -right-[8px] -top-[8px] h-[16px] w-[16px] cursor-ne-resize touch-none rounded-full bg-white shadow-md"></div>
+      <div data-handle="sw" class="absolute -bottom-[8px] -left-[8px] h-[16px] w-[16px] cursor-sw-resize touch-none rounded-full bg-white shadow-md"></div>
+      <div data-handle="se" class="absolute -bottom-[8px] -right-[8px] h-[16px] w-[16px] cursor-se-resize touch-none rounded-full bg-white shadow-md"></div>
+
+      <!-- Edge handles (touch-none too, 4px visual). -->
+      <div data-handle="n" class="absolute left-1/2 top-0 h-[4px] w-[48px] -translate-x-1/2 -translate-y-[3px] cursor-n-resize touch-none rounded-full bg-white shadow-md"></div>
+      <div data-handle="s" class="absolute bottom-0 left-1/2 h-[4px] w-[48px] -translate-x-1/2 translate-y-[3px] cursor-s-resize touch-none rounded-full bg-white shadow-md"></div>
+      <div data-handle="w" class="absolute left-0 top-1/2 h-[48px] w-[4px] -translate-x-[3px] -translate-y-1/2 cursor-w-resize touch-none rounded-full bg-white shadow-md"></div>
+      <div data-handle="e" class="absolute right-0 top-1/2 h-[48px] w-[4px] translate-x-[3px] -translate-y-1/2 cursor-e-resize touch-none rounded-full bg-white shadow-md"></div>
+    </div>
+
+    <!-- Dimension chip (frame bottom-center, over the scrim so it always reads). -->
+    <div
+      data-crop-dim
+      class="pointer-events-none absolute bottom-2 left-1/2 z-20 -translate-x-1/2 rounded-md bg-black/70 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm"
+    >
+      —
+    </div>
+  </div>
+</div>

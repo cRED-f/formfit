@@ -5,6 +5,9 @@ import Icon, { type IconName } from '../components/ui/Icon.astro';
 import IconTile from '../components/ui/IconTile.astro';
 import HeroUpload from '../components/tool/HeroUpload.astro';
 import UploadPanel from '../components/tool/UploadPanel.astro';
+import CropPanel from '../components/tool/CropPanel.astro';
+import PreviewPanel from '../components/tool/PreviewPanel.astro';
+import ResultPanel from '../components/tool/ResultPanel.astro';
 import Input from '../components/ui/Input.astro';
 import Select from '../components/ui/Select.astro';
 import Button from '../components/ui/Button.astro';
@@ -113,13 +116,14 @@ const faqSchema = {
           <div data-panel="resize" class="hidden">
             <UploadPanel>
               <div slot="controls">
+                <CropPanel />
                 <div class="grid gap-5 sm:grid-cols-2">
                   <Input id="home-resize-width" label="Width" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
                   <Input id="home-resize-height" label="Height" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
                 </div>
                 <div class="mt-5 flex flex-wrap items-end gap-x-8 gap-y-5">
                   <label class="inline-flex cursor-pointer select-none items-center gap-2 text-[15px] text-ink">
-                    <input type="checkbox" checked class="h-4 w-4 accent-primary" />
+                    <input id="home-resize-aspect" type="checkbox" checked class="h-4 w-4 accent-primary" />
                     Maintain aspect ratio
                   </label>
                   <div class="w-full sm:w-64">
@@ -134,10 +138,12 @@ const faqSchema = {
                     />
                   </div>
                 </div>
+                <PreviewPanel />
                 <div class="mt-6">
-                  <Button size="lg">Resize Image</Button>
+                  <Button size="lg" data-run="home-resize">Resize Image</Button>
                 </div>
               </div>
+              <ResultPanel slot="result" />
             </UploadPanel>
           </div>
 
@@ -145,6 +151,7 @@ const faqSchema = {
           <div data-panel="compress" class="hidden">
             <UploadPanel>
               <div slot="controls">
+                <CropPanel />
                 <div class="grid gap-5 sm:grid-cols-2">
                   <Input id="home-compress-target" label="Target file size" type="number" inputmode="numeric" min="1" max="1000" defaultValue="50" unit="KB" />
                   <Select
@@ -160,9 +167,10 @@ const faqSchema = {
                   Image still too big after compressing? We'll suggest safely reducing its dimensions, rather than silently ruining the quality.
                 </p>
                 <div class="mt-6">
-                  <Button size="lg" icon="compress">Compress Image</Button>
+                  <Button size="lg" icon="compress" data-run="home-compress">Compress Image</Button>
                 </div>
               </div>
+              <ResultPanel slot="result" />
             </UploadPanel>
           </div>
 
@@ -170,6 +178,7 @@ const faqSchema = {
           <div data-panel="signature" class="hidden">
             <UploadPanel>
               <div slot="controls">
+                <CropPanel />
                 <div class="grid gap-5 sm:grid-cols-3">
                   <Input id="home-sig-width" label="Width" type="number" inputmode="numeric" min="1" defaultValue="300" unit="px" />
                   <Input id="home-sig-height" label="Height" type="number" inputmode="numeric" min="1" defaultValue="80" unit="px" />
@@ -189,10 +198,12 @@ const faqSchema = {
                 <p class="mt-5 rounded-md bg-parchment px-4 py-3 text-caption text-ink-muted-80">
                   We automatically crop empty space around the signature, keep its proportions, and center it in the frame.
                 </p>
+                <PreviewPanel />
                 <div class="mt-6">
-                  <Button size="lg" icon="signature">Prepare Signature</Button>
+                  <Button size="lg" icon="signature" data-run="home-signature">Prepare Signature</Button>
                 </div>
               </div>
+              <ResultPanel slot="result" />
             </UploadPanel>
           </div>
 
@@ -200,6 +211,7 @@ const faqSchema = {
           <div data-panel="convert" class="hidden">
             <UploadPanel>
               <div slot="controls">
+                <CropPanel />
                 <div class="grid gap-5 sm:grid-cols-2">
                   <Select
                     id="home-conv-format"
@@ -221,9 +233,10 @@ const faqSchema = {
                   />
                 </div>
                 <div class="mt-6">
-                  <Button size="lg" icon="convert">Convert Image</Button>
+                  <Button size="lg" icon="convert" data-run="home-convert">Convert Image</Button>
                 </div>
               </div>
+              <ResultPanel slot="result" />
             </UploadPanel>
           </div>
 
@@ -395,25 +408,47 @@ const faqSchema = {
     const heroTools = document.querySelector<HTMLElement>('[data-hero-tools]');
     const backBtn = heroTools?.querySelector<HTMLButtonElement>('[data-back]');
 
+    // Reveal one inline tool panel and hide the rest. Reused by the tool cards
+    // and by the hero upload's "Resize it → / Compress it →" buttons.
+    function openTool(id: string) {
+      const target = heroTools?.querySelector<HTMLElement>(`[data-panel="${id}"]`);
+      heroUpload?.classList.add('hidden');
+      heroTools?.classList.remove('hidden');
+      heroTools?.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => p.classList.add('hidden'));
+      target?.classList.remove('hidden');
+      heroTools?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     document.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const id = btn.dataset.tool!;
-        const target = heroTools?.querySelector<HTMLElement>(`[data-panel="${id}"]`);
 
         // Toggle active card
         document.querySelectorAll('[data-tool]').forEach((b) => b.removeAttribute('data-active'));
         btn.setAttribute('data-active', '');
 
-        // Hide hero upload, show tool panels
-        heroUpload?.classList.add('hidden');
-        heroTools?.classList.remove('hidden');
-        heroTools?.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => p.classList.add('hidden'));
-        target?.classList.remove('hidden');
-
-        // Scroll to top of hero
-        heroTools?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        openTool(id);
       });
     });
+
+    // The hero's "Resize it → / Compress it →" buttons carry the already-picked
+    // image forward, so no page navigation and no second file picker.
+    document.querySelector<HTMLElement>('[data-hero-upload]')?.addEventListener('formfit:open-tool', ((e) => {
+      const { tool, file } = (e as CustomEvent).detail as { tool: string; file: File | null };
+      if (!tool) return;
+
+      openTool(tool);
+      if (!file) return;
+
+      // Hand the file to the inline panel's own upload input, which renders the
+      // preview and re-dispatches `formfit:file-ready` to the tool mount.
+      const input = heroTools?.querySelector<HTMLInputElement>(`[data-panel="${tool}"] [data-file-input]`);
+      if (!input) return;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }) as EventListener);
 
     backBtn?.addEventListener('click', () => {
       // Show hero upload, hide tool panels
@@ -421,5 +456,21 @@ const faqSchema = {
       heroTools?.classList.add('hidden');
       document.querySelectorAll('[data-tool]').forEach((b) => b.removeAttribute('data-active'));
     });
+  </script>
+
+  <script>
+    import { mountResize, mountCompress, mountSignature, mountConvert } from '../lib/image/tools';
+
+    const mounts = [
+      ['resize', mountResize],
+      ['compress', mountCompress],
+      ['signature', mountSignature],
+      ['convert', mountConvert],
+    ] as const;
+
+    for (const [id, mount] of mounts) {
+      const root = document.querySelector<HTMLElement>(`[data-panel="${id}"] [data-formfit-upload]`);
+      if (root) mount(root, 'home-');
+    }
   </script>
 </Layout>

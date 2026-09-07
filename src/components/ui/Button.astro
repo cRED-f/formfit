@@ -26,10 +26,14 @@ const base =
   'inline-flex items-center justify-center gap-2 rounded-full font-medium transition active:scale-[0.97]';
 
 const variantClasses = {
-  primary: 'bg-primary text-on-primary hover:bg-primary-focus',
-  secondary: 'border border-primary text-primary hover:bg-primary/5',
-  dark: 'bg-ink text-white hover:bg-ink-muted-80',
-  ghost: 'bg-pearl text-ink-muted-80 border-[3px] border-divider-soft hover:text-ink',
+  primary:
+    'bg-black/[0.78] text-white border border-white/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_2px_6px_rgba(0,0,0,0.2)] backdrop-blur-xl hover:bg-black/[0.85]',
+  secondary:
+    'bg-black/[0.05] text-ink border border-black/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_1px_2px_rgba(0,0,0,0.05)] hover:bg-black/[0.08]',
+  dark:
+    'bg-black/[0.72] text-white border border-white/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_2px_6px_rgba(0,0,0,0.18)] backdrop-blur-xl hover:bg-black/[0.82]',
+  ghost:
+    'bg-black/[0.03] text-ink border border-black/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_1px_2px_rgba(0,0,0,0.03)] hover:bg-black/[0.06]',
 } as const;
 
 const sizeClasses = {

@@ -16,33 +16,33 @@ const { id, label, options, hint, disabled = false } = Astro.props;
 ---
 
 <div>
-  <label for={id} class="mb-1.5 block text-caption font-medium text-ink">
+  <label for={id} class="mb-2 block text-[13px] font-medium uppercase tracking-wide text-ink-muted-48">
     {label}
   </label>
-  <div class="relative">
+  <div class="group relative">
     <select
       id={id}
       disabled={disabled}
-      class="h-11 w-full appearance-none rounded-md border border-hairline bg-canvas px-3 pr-10 text-[15px] text-ink transition focus:border-primary focus:outline-none disabled:cursor-not-allowed disabled:bg-parchment disabled:text-ink-muted-48"
+      class="h-12 w-full appearance-none rounded-xl border border-hairline bg-parchment px-4 pr-11 text-[15px] font-normal text-ink transition-all duration-200 focus:border-primary focus:bg-canvas focus:shadow-[0_0_0_3px_rgba(0,102,204,0.12)] focus:outline-none disabled:cursor-not-allowed disabled:bg-parchment disabled:text-ink-muted-48"
     >
       {options.map((opt) => (
         <option value={opt.value}>{opt.label}</option>
       ))}
     </select>
     <svg
-      width="16"
-      height="16"
+      width="18"
+      height="18"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
-      class="pointer-events-none absolute inset-y-0 right-3 my-auto text-ink-muted-48"
+      class="pointer-events-none absolute inset-y-0 right-3.5 my-auto text-ink-muted-48/70 transition group-focus-within:text-ink-muted-48"
       aria-hidden="true"
     >
       <path d="m6 9 6 6 6-6" />
     </svg>
   </div>
-  {hint && <p class="mt-1.5 text-fine-print text-ink-muted-48">{hint}</p>}
+  {hint && <p class="mt-2 text-fine-print text-ink-muted-48">{hint}</p>}
 </div>

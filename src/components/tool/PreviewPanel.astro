@@ -1,0 +1,15 @@
+---
+/**
+ * PreviewPanel — live preview of the current crop + output dimensions.
+ * Hidden until a file is loaded and the dimensions are valid.
+ * preview.ts drives the canvas and the dimension caption.
+ */
+---
+
+<div data-live-preview hidden class="mb-6">
+  <p class="mb-3 text-[13px] font-medium uppercase tracking-wide text-ink-muted-48">Preview</p>
+  <div class="flex items-center justify-center overflow-hidden rounded-xl border border-hairline bg-parchment px-4 py-4">
+    <canvas data-live-canvas class="max-w-full rounded-md bg-white" style="max-height: 360px;"></canvas>
+  </div>
+  <p data-live-dim class="mt-2 text-center text-fine-print text-ink-muted-48">—</p>
+</div>

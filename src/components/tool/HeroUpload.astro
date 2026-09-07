@@ -63,8 +63,8 @@ import IconTile from '../ui/IconTile.astro';
         <p class="shrink-0 text-fine-print text-ink-muted-48" data-file-meta>— × —</p>
       </div>
       <div class="ff-rise mt-3 flex items-center justify-center gap-5" style="animation-delay:120ms">
-        <a href="/resize-image/" class="text-caption font-medium text-primary transition hover:underline">Resize it →</a>
-        <a href="/compress-image/" class="text-caption font-medium text-primary transition hover:underline">Compress it →</a>
+        <button type="button" data-open-tool="resize" class="text-caption font-medium text-primary transition hover:underline">Resize it →</button>
+        <button type="button" data-open-tool="compress" class="text-caption font-medium text-primary transition hover:underline">Compress it →</button>
         <button type="button" data-remove class="text-caption font-medium text-ink-muted-48 transition hover:text-ink">Remove</button>
       </div>
     </div>
@@ -129,6 +129,9 @@ import IconTile from '../ui/IconTile.astro';
 
     zone.dataset.state = 'empty';
     let objectUrl: string | null = null;
+    let currentFile: File | null = null;
+    let currentWidth = 0;
+    let currentHeight = 0;
     let busy = false;
 
     function formatSize(b: number) {
@@ -152,6 +155,9 @@ import IconTile from '../ui/IconTile.astro';
         await image.decode();
         if (objectUrl) URL.revokeObjectURL(objectUrl);
         objectUrl = url;
+        currentFile = file;
+        currentWidth = image.naturalWidth;
+        currentHeight = image.naturalHeight;
         img.classList.remove('ff-pop');
         void img.getBoundingClientRect();
         img.classList.add('ff-pop');
@@ -168,7 +174,7 @@ import IconTile from '../ui/IconTile.astro';
     }
 
     zone.addEventListener('click', (e) => {
-      if ((e.target as Element).closest('[data-remove]')) return;
+      if ((e.target as Element).closest('[data-remove],[data-open-tool]')) return;
       if (!busy) input.click();
     });
     zone.addEventListener('keydown', (e) => {
@@ -179,9 +185,32 @@ import IconTile from '../ui/IconTile.astro';
     removeBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
       if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+      currentFile = null;
+      currentWidth = 0;
+      currentHeight = 0;
       img.removeAttribute('src');
       input.value = '';
       zone.dataset.state = 'empty';
+    });
+
+    // "Resize it →" / "Compress it →" stay on the homepage: tell it which tool
+    // to reveal and hand over the already-picked image so there's no re-upload.
+    root.querySelectorAll<HTMLButtonElement>('[data-open-tool]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        root.dispatchEvent(
+          new CustomEvent('formfit:open-tool', {
+            bubbles: true,
+            detail: {
+              tool: btn.dataset.openTool,
+              file: currentFile,
+              objectUrl,
+              width: currentWidth,
+              height: currentHeight,
+            },
+          })
+        );
+      });
     });
 
     let dragDepth = 0;

@@ -1,6 +1,8 @@
 ---
 import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
 import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
 import Button from '../../components/ui/Button.astro';
 import Input from '../../components/ui/Input.astro';
 import Select from '../../components/ui/Select.astro';
@@ -59,6 +61,8 @@ const related: ToolRelated[] = [
   <div slot="tool">
     <UploadPanel>
       <div slot="controls">
+        <CropPanel />
+
         <div class="grid gap-5 sm:grid-cols-2">
           <Input
             id="compress-target"
@@ -86,11 +90,18 @@ const related: ToolRelated[] = [
         </p>
 
         <div class="mt-6">
-          <Button size="lg" icon="compress">
+          <Button size="lg" icon="compress" data-run="compress">
             Compress Image
           </Button>
         </div>
       </div>
+      <ResultPanel slot="result" />
     </UploadPanel>
   </div>
 </ToolShell>
+
+<script>
+  import { mountCompress } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountCompress(root);
+</script>

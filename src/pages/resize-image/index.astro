@@ -1,6 +1,9 @@
 ---
 import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
 import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import PreviewPanel from '../../components/tool/PreviewPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
 import Button from '../../components/ui/Button.astro';
 import Input from '../../components/ui/Input.astro';
 import Select from '../../components/ui/Select.astro';
@@ -59,6 +62,8 @@ const related: ToolRelated[] = [
   <div slot="tool">
     <UploadPanel>
       <div slot="controls">
+        <CropPanel />
+
         <div class="grid gap-5 sm:grid-cols-2">
           <Input id="resize-width" label="Width" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
           <Input id="resize-height" label="Height" type="number" inputmode="numeric" min="1" placeholder="300" unit="px" />
@@ -66,7 +71,7 @@ const related: ToolRelated[] = [
 
         <div class="mt-5 flex flex-wrap items-end gap-x-8 gap-y-5">
           <label class="inline-flex cursor-pointer select-none items-center gap-2 text-[15px] text-ink">
-            <input type="checkbox" checked class="h-4 w-4 accent-primary" />
+            <input id="resize-aspect" type="checkbox" checked class="h-4 w-4 accent-primary" />
             Maintain aspect ratio
           </label>
           <div class="w-full sm:w-64">
@@ -82,10 +87,19 @@ const related: ToolRelated[] = [
           </div>
         </div>
 
+        <PreviewPanel />
+
         <div class="mt-6">
-          <Button size="lg">Resize Image</Button>
+          <Button size="lg" data-run="resize">Resize Image</Button>
         </div>
       </div>
+      <ResultPanel slot="result" />
     </UploadPanel>
   </div>
 </ToolShell>
+
+<script>
+  import { mountResize } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountResize(root);
+</script>

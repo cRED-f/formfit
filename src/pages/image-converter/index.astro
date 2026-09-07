@@ -1,6 +1,8 @@
 ---
 import ToolShell, { type ToolRelated } from '../../components/tool/ToolShell.astro';
 import UploadPanel from '../../components/tool/UploadPanel.astro';
+import CropPanel from '../../components/tool/CropPanel.astro';
+import ResultPanel from '../../components/tool/ResultPanel.astro';
 import Button from '../../components/ui/Button.astro';
 import Select from '../../components/ui/Select.astro';
 
@@ -58,6 +60,8 @@ const related: ToolRelated[] = [
   <div slot="tool">
     <UploadPanel>
       <div slot="controls">
+        <CropPanel />
+
         <div class="grid gap-5 sm:grid-cols-2">
           <Select
             id="conv-format"
@@ -80,11 +84,18 @@ const related: ToolRelated[] = [
         </div>
 
         <div class="mt-6">
-          <Button size="lg" icon="convert">
+          <Button size="lg" icon="convert" data-run="convert">
             Convert Image
           </Button>
         </div>
       </div>
+      <ResultPanel slot="result" />
     </UploadPanel>
   </div>
 </ToolShell>
+
+<script>
+  import { mountConvert } from '../../lib/image/tools';
+  const root = document.querySelector<HTMLElement>('[data-formfit-upload]');
+  if (root) mountConvert(root);
+</script>

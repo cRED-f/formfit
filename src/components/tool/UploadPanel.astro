@@ -252,6 +252,8 @@ const { formats = 'JPG, PNG, WebP', sizeHint = 'Up to 25 MB' } = Astro.props;
       input.value = '';
       img.removeAttribute('src');
       show('empty');
+      // Let crop/preview panels clear their state when the file goes away.
+      root.dispatchEvent(new CustomEvent('formfit:file-cleared'));
     }
 
     // Click anywhere on the box (except the action buttons) opens the picker.

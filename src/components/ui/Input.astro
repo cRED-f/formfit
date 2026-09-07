@@ -7,30 +7,33 @@ interface Props extends HTMLAttributes<'input'> {
   /** Suffix shown inside the field, e.g. "px" or "KB". */
   unit?: string;
   hint?: string;
+  /** Initial value shown when the page first renders (plain HTML inputs read `value`, not `defaultValue`). */
+  defaultValue?: string | number;
 }
 
-const { id, label, unit, hint, class: className, ...rest } = Astro.props;
+const { id, label, unit, hint, defaultValue, class: className, ...rest } = Astro.props;
 ---
 
 <div>
-  <label for={id} class="mb-1.5 block text-caption font-medium text-ink">
+  <label for={id} class="mb-2 block text-[13px] font-medium uppercase tracking-wide text-ink-muted-48">
     {label}
   </label>
-  <div class="relative">
+  <div class="group relative">
     <input
       id={id}
       class:list={[
-        'h-11 w-full rounded-md border border-hairline bg-canvas px-3 text-[15px] text-ink placeholder:text-ink-muted-48 transition focus:border-primary focus:outline-none',
+        'h-12 w-full rounded-xl border border-hairline bg-parchment px-4 text-[15px] font-normal text-ink placeholder:text-ink-muted-48/60 transition-all duration-200 focus:border-primary focus:bg-canvas focus:shadow-[0_0_0_3px_rgba(0,102,204,0.12)] focus:outline-none',
         unit && 'pr-14',
         className,
       ]}
+      value={defaultValue}
       {...rest}
     />
     {unit && (
-      <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-[13px] text-ink-muted-48">
+      <span class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-[13px] font-medium text-ink-muted-48">
         {unit}
       </span>
     )}
   </div>
-  {hint && <p class="mt-1.5 text-fine-print text-ink-muted-48">{hint}</p>}
+  {hint && <p class="mt-2 text-fine-print text-ink-muted-48">{hint}</p>}
 </div>
