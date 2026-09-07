@@ -4,7 +4,7 @@
 
 FormFit is a collection of browser-based image tools that resize, compress, convert, and prepare images and signatures for online forms. No uploads, no servers, no accounts — everything runs on your device.
 
-Live site: [formfit.com](https://formfit.com)
+Live site: [formfit-f1l.pages.dev](https://formfit-f1l.pages.dev)
 
 ---
 

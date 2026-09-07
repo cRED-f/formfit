@@ -41,7 +41,7 @@ const breadcrumbSchema = {
     '@type': 'ListItem',
     position: index + 1,
     name: crumb.name,
-    ...(crumb.href ? { item: new URL(crumb.href, Astro.site ?? 'https://formfit.com').toString() } : {}),
+    ...(crumb.href ? { item: new URL(crumb.href, Astro.site ?? 'https://formfit-f1l.pages.dev').toString() } : {}),
   })),
 };
 

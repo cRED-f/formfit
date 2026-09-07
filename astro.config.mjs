@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://formfit.com',
+  site: 'https://formfit-f1l.pages.dev',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

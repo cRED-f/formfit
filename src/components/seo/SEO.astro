@@ -19,7 +19,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-const site = Astro.site ?? new URL('https://formfit.com');
+const site = Astro.site ?? new URL('https://formfit-f1l.pages.dev');
 const canonical = path.startsWith('http') ? path : new URL(path, site).toString();
 const ogType = type === 'article' ? 'article' : 'website';
 ---
