@@ -245,10 +245,25 @@ const faqSchema = {
           </button>
         </div>
 
-        <p class="mt-8 flex items-center justify-center gap-2 text-caption text-ink-muted-48">
-          <Icon name="lock" size={15} />
-          Your images never leave your device.
-        </p>
+        <!-- Trust indicators strip -->
+        <div class="mx-auto mt-10 flex max-w-lg flex-wrap items-center justify-center gap-x-6 gap-y-3 text-fine-print text-ink-muted-48">
+          <span class="inline-flex items-center gap-1.5">
+            <Icon name="lock" size={13} class="text-ink-muted-48" />
+            100% private
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <Icon name="user" size={13} class="text-ink-muted-48" />
+            No login required
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <Icon name="bolt" size={13} class="text-ink-muted-48" />
+            Works offline
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <Icon name="resize" size={13} class="text-ink-muted-48" />
+            Free forever
+          </span>
+        </div>
       </div>
     </Container>
   </section>
@@ -286,14 +301,17 @@ const faqSchema = {
     <Container width="standard">
       <div class="py-20">
         <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">Why FormFit</h2>
-        <div class="mt-12 grid gap-10 md:grid-cols-3">
+        <p class="mx-auto mt-4 max-w-xl text-center text-body text-ink-muted-80">
+          The simplest way to get your images accepted by any online form — no software to install, no account to create.
+        </p>
+        <div class="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           <div class="text-center">
             <div class="mx-auto inline-flex">
               <IconTile name="lock" size="md" />
             </div>
             <h3 class="mt-6 text-tagline font-semibold">Private by design</h3>
             <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
-              Everything runs on your device — no server, no uploads, no leaks.
+              Your images never leave your device. Zero server uploads, zero tracking, zero risk.
             </p>
           </div>
           <div class="text-center">
@@ -302,16 +320,43 @@ const faqSchema = {
             </div>
             <h3 class="mt-6 text-tagline font-semibold">Instantly fast</h3>
             <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
-              No upload, no waiting — results appear the moment your image is ready.
+              No upload wait time. Results appear the moment your image is ready — even on slow connections.
             </p>
           </div>
           <div class="text-center">
             <div class="mx-auto inline-flex">
               <IconTile name="user" size="md" />
             </div>
-            <h3 class="mt-6 text-tagline font-semibold">No account needed</h3>
+            <h3 class="mt-6 text-tagline font-semibold">No login, ever</h3>
             <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
-              Open, upload, download. No login, no signup.
+              No account, no signup, no email. Just open a tool and start working.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto inline-flex">
+              <IconTile name="fileImage" size="md" />
+            </div>
+            <h3 class="mt-6 text-tagline font-semibold">Free forever</h3>
+            <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
+              All tools are completely free. No limits, no watermarks, no "upgrade" prompts.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto inline-flex">
+              <IconTile name="resize" size="md" />
+            </div>
+            <h3 class="mt-6 text-tagline font-semibold">Works offline</h3>
+            <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
+              Once loaded, FormFit works without an internet connection. Perfect for travel or spotty Wi-Fi.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="mx-auto inline-flex">
+              <IconTile name="shield" size="md" />
+            </div>
+            <h3 class="mt-6 text-tagline font-semibold">No ads, no tracking</h3>
+            <p class="mx-auto mt-2 max-w-xs text-body text-ink-muted-80">
+              No analytics scripts, no ad networks, no cookies. Your browsing stays yours.
             </p>
           </div>
         </div>
@@ -362,6 +407,104 @@ const faqSchema = {
             </li>
           ))}
         </ul>
+      </div>
+    </Container>
+  </section>
+
+  <!-- FormFit vs Others -->
+  <section class="bg-canvas">
+    <Container width="standard">
+      <div class="py-20">
+        <h2 class="text-center text-display-md font-semibold tracking-[-0.374px]">FormFit vs. the alternatives</h2>
+        <p class="mx-auto mt-4 max-w-xl text-center text-body text-ink-muted-80">
+          Why thousands of people choose FormFit over photo editors, online uploaders, and desktop apps.
+        </p>
+        <div class="mx-auto mt-12 max-w-3xl overflow-hidden rounded-xl border border-hairline">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="border-b border-hairline bg-parchment">
+                <th class="px-5 py-4 text-[13px] font-semibold uppercase tracking-wide text-ink-muted-48"></th>
+                <th class="px-5 py-4 text-[13px] font-semibold uppercase tracking-wide text-primary">FormFit</th>
+                <th class="px-5 py-4 text-[13px] font-semibold uppercase tracking-wide text-ink-muted-48">Photoshop / GIMP</th>
+                <th class="px-5 py-4 text-[13px] font-semibold uppercase tracking-wide text-ink-muted-48">Online uploaders</th>
+              </tr>
+            </thead>
+            <tbody class="text-body">
+              <tr class="border-b border-hairline">
+                <td class="px-5 py-4 font-medium text-ink">Price</td>
+                <td class="px-5 py-4 font-semibold text-primary">Free</td>
+                <td class="px-5 py-4 text-ink-muted-48">$20+/month</td>
+                <td class="px-5 py-4 text-ink-muted-48">Free with limits</td>
+              </tr>
+              <tr class="border-b border-hairline">
+                <td class="px-5 py-4 font-medium text-ink">Account required</td>
+                <td class="px-5 py-4 font-semibold text-primary">No</td>
+                <td class="px-5 py-4 text-ink-muted-48">Yes</td>
+                <td class="px-5 py-4 text-ink-muted-48">Usually yes</td>
+              </tr>
+              <tr class="border-b border-hairline">
+                <td class="px-5 py-4 font-medium text-ink">Images uploaded to server</td>
+                <td class="px-5 py-4 font-semibold text-primary">Never</td>
+                <td class="px-5 py-4 text-ink-muted-48">No</td>
+                <td class="px-5 py-4 text-ink">Always</td>
+              </tr>
+              <tr class="border-b border-hairline">
+                <td class="px-5 py-4 font-medium text-ink">Learning curve</td>
+                <td class="px-5 py-4 font-semibold text-primary">None</td>
+                <td class="px-5 py-4 text-ink-muted-48">Steep</td>
+                <td class="px-5 py-4 text-ink-muted-48">Low</td>
+              </tr>
+              <tr class="border-b border-hairline">
+                <td class="px-5 py-4 font-medium text-ink">Works offline</td>
+                <td class="px-5 py-4 font-semibold text-primary">Yes</td>
+                <td class="px-5 py-4 text-ink-muted-48">Yes</td>
+                <td class="px-5 py-4 text-ink-muted-48">No</td>
+              </tr>
+              <tr class="border-b border-hairline">
+                <td class="px-5 py-4 font-medium text-ink">Ads / watermarks</td>
+                <td class="px-5 py-4 font-semibold text-primary">None</td>
+                <td class="px-5 py-4 text-ink-muted-48">None</td>
+                <td class="px-5 py-4 text-ink">Common</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-4 font-medium text-ink">Time to result</td>
+                <td class="px-5 py-4 font-semibold text-primary">Seconds</td>
+                <td class="px-5 py-4 text-ink-muted-48">Minutes</td>
+                <td class="px-5 py-4 text-ink-muted-48">Minutes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-tile-1 text-white">
+    <Container width="standard">
+      <div class="py-20 text-center">
+        <h2 class="text-display-md font-semibold tracking-[-0.374px]">Ready to get your image accepted?</h2>
+        <p class="mx-auto mt-4 max-w-lg text-body text-body-muted">
+          No signup. No upload. No waiting. Pick a tool below and fix your image in seconds.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="/resize-image/" class="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-[15px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_2px_8px_rgba(0,102,204,0.3)] transition-all hover:bg-[#005bb5] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_4px_16px_rgba(0,102,204,0.35)]">
+            <Icon name="resize" size={16} />
+            Resize Image
+          </a>
+          <a href="/compress-image/" class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/30">
+            <Icon name="compress" size={16} />
+            Compress Image
+          </a>
+          <a href="/signature-resizer/" class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/30">
+            <Icon name="signature" size={16} />
+            Prepare Signature
+          </a>
+          <a href="/image-converter/" class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-[15px] font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/30">
+            <Icon name="convert" size={16} />
+            Convert Image
+          </a>
+        </div>
       </div>
     </Container>
   </section>
