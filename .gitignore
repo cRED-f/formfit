@@ -16,9 +16,30 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env*.local
 
-# macOS-specific files
+# IDE
+.vscode/
+.idea/
+
+# AI tools
+.claude/
+.agents/
+
+# macOS
 .DS_Store
 
-# jetbrains setting folder
-.idea/
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# test coverage
+coverage/
+
+# misc
+*.local
+.vercel/
+.netlify/

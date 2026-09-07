@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Breadcrumbs from '../components/seo/Breadcrumbs.astro';
+
+const crumbs = [{ name: 'Home', href: '/' }, { name: 'Terms & Conditions' }];
+---
+
+<Layout
+  title="Terms & Conditions — FormFit"
+  description="Terms and conditions for using FormFit's free browser-based image compressor, resizer, and converter tools."
+  path="/terms/"
+>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://formfit.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Terms & Conditions", "item": "https://formfit.com/terms/" }
+      ]
+    }
+  </script>
+  <Container width="narrow">
+    <div class="py-16">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-7 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">Terms &amp; Conditions</h1>
+      <p class="mt-5 text-lead text-ink-muted-80">
+        By using FormFit you agree to the terms below. FormFit is a free, browser-based image
+        compressor, resizer, and converter — all processing happens on your device.
+      </p>
+
+      <div class="mt-12 space-y-12">
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Use of the service</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit provides free, browser-based tools for compressing, resizing, and converting
+            images. You may use the tools for any lawful purpose. You are responsible for the
+            images you process and for ensuring that your use does not violate any applicable law
+            or the rights of a third party.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">No account required</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit does not require an account, login, or registration. There is no user
+            authentication and no personally identifiable information is collected beyond what
+            is described in the Privacy Policy.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Ownership of your images</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            You retain full ownership of every image you process with FormFit. Because all
+            processing happens locally in your browser, FormFit never receives, stores, or has
+            access to your files. You are solely responsible for your uploaded and downloaded
+            images.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Intellectual property</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            The FormFit tools, code, design, and branding are the property of FormFit. You may
+            not copy, modify, distribute, or reverse-engineer any part of the service without
+            prior written permission.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Service availability</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit aims to be available at all times, but we do not guarantee uninterrupted
+            access. The service may be temporarily unavailable for maintenance or updates. Since
+            processing runs on your device, the tools may also work offline once loaded.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Limitation of liability</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit is provided "as is" without warranties of any kind. We are not liable for any
+            damages arising from the use or inability to use the service, including but not limited
+            to loss of data, loss of images, or any indirect, incidental, or consequential damages.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Third-party links</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            FormFit may contain links to third-party websites or resources. We are not responsible
+            for the content, policies, or practices of any third-party sites. Use of third-party
+            services is at your own risk.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Changes to these terms</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            We may update these terms from time to time. The latest version will always be
+            available on this page with the effective date at the top. Continued use of FormFit
+            after changes are posted constitutes acceptance of the updated terms.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-display-md font-semibold tracking-[-0.374px]">Contact</h2>
+          <p class="mt-4 text-body text-ink-muted-80">
+            Questions about these terms? Email us at
+            <a href="mailto:mrislam.fahim@gmail.com" class="font-semibold text-primary hover:underline">
+              mrislam.fahim@gmail.com
+            </a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </Container>
+</Layout>

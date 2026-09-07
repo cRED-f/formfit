@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Container from '../components/layout/Container.astro';
+import Icon from '../components/ui/Icon.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<Layout
+  title="Something Went Wrong — FormFit"
+  description="FormFit encountered an unexpected error. Please try again or head back to the homepage."
+  path="/500"
+  noindex
+>
+  <section class="bg-canvas">
+    <Container width="narrow">
+      <div class="flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+        <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-parchment text-primary">
+          <Icon name="bolt" size={28} />
+        </span>
+        <h1 class="mt-8 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">
+          Something went wrong
+        </h1>
+        <p class="mt-4 max-w-md text-body text-ink-muted-80">
+          FormFit hit an unexpected error. This is rare — please try refreshing the page or heading
+          back to the homepage.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Button href="/" size="lg">Go to Homepage</Button>
+          <button
+            type="button"
+            onclick="window.location.reload()"
+            class="inline-flex items-center gap-2 rounded-full border border-hairline bg-canvas px-7 py-3.5 text-[15px] font-semibold text-ink transition-colors hover:bg-pearl"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    </Container>
+  </section>
+</Layout>

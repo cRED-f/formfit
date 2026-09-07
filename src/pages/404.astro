@@ -1,53 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Container from '../components/layout/Container.astro';
+import Icon from '../components/ui/Icon.astro';
 import Button from '../components/ui/Button.astro';
-
-const popularTools = [
-  { href: '/resize-image/', label: 'Resize Image' },
-  { href: '/compress-image/', label: 'Compress Image' },
-  { href: '/signature-resizer/', label: 'Signature Resizer' },
-  { href: '/image-converter/', label: 'Image Converter' },
-];
 ---
 
 <Layout
-  title="Page Not Found | FormFit"
-  description="This page doesn't exist. Head back to FormFit to resize, compress, or convert an image."
-  path="/404/"
+  title="Page Not Found — FormFit"
+  description="The page you're looking for doesn't exist. Head back to FormFit's free image compressor, resizer, and converter tools."
+  path="/404"
   noindex
 >
   <section class="bg-canvas">
-    <Container width="standard">
-      <div class="py-24 text-center sm:py-32">
-        <p class="text-display-lg font-semibold text-primary">404</p>
-        <h1 class="mt-3 text-display-md font-semibold tracking-[-0.374px]">
-          This page doesn't exist
+    <Container width="narrow">
+      <div class="flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
+        <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-parchment text-primary">
+          <Icon name="fileImage" size={28} />
+        </span>
+        <h1 class="mt-8 text-[2rem] font-semibold tracking-[-0.374px] sm:text-display-lg">
+          Page not found
         </h1>
-        <p class="mx-auto mt-4 max-w-md text-body text-ink-muted-80">
-          The link may be out of date, or the page may have moved. The tools below are exactly where
-          you left them.
+        <p class="mt-4 max-w-md text-body text-ink-muted-80">
+          The page you're looking for doesn't exist or may have been moved. Head back to our free
+          image compressor, resizer, and converter tools.
         </p>
         <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Button href="/" variant="primary">
-            Back to Home
-          </Button>
-          <Button href="/compress-image/" variant="secondary">
-            Compress an Image
-          </Button>
+          <Button href="/" size="lg">Go to Homepage</Button>
+          <Button href="/compress-image/" size="lg" variant="secondary">Try the Compressor</Button>
         </div>
-        <ul class="mx-auto mt-12 flex max-w-2xl flex-wrap justify-center gap-2.5">
-          {popularTools.map((tool) => (
-            <li>
-              <a
-                href={tool.href}
-                class="inline-block rounded-full border border-hairline bg-canvas px-4 py-2 text-caption text-ink-muted-80 transition-colors hover:text-primary"
-              >
-                {tool.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4 text-caption text-ink-muted-48">
+          <a href="/resize-image/" class="transition-colors hover:text-primary">Resize Image</a>
+          <span class="text-hairline">|</span>
+          <a href="/compress-image/" class="transition-colors hover:text-primary">Compress Image</a>
+          <span class="text-hairline">|</span>
+          <a href="/signature-resizer/" class="transition-colors hover:text-primary">Signature Resizer</a>
+          <span class="text-hairline">|</span>
+          <a href="/image-converter/" class="transition-colors hover:text-primary">Image Converter</a>
+        </div>
       </div>
     </Container>
   </section>
